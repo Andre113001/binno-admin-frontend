@@ -1,0 +1,4 @@
+.focused-border  .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+    border-color: orange; /* Change the border color to orange when focused */
+    color: orange;
+  }

@@ -1,0 +1,123 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;600;700;800&family=Nunito:wght@300;500&family=Roboto:wght@100;300;700;900&display=swap');
+
+* {
+    font-family: 'Inter', sans-serif;
+}
+
+/* CONTAINER */
+.container-body {
+    @apply flex flex-col mt-20 mx-[20%];
+}
+
+.container {
+    @apply w-[65%] mx-auto;
+}
+
+
+/* TEXT FORMATTING */
+.heading-1 {
+    @apply text-5xl font-bold;
+}
+
+/* BUTTONS */
+.btn-orange {
+    @apply bg-orange-300 duration-300 hover:bg-orange-600 text-white font-bold m-2 py-2 px-4 border rounded-[10px] focus:ring-4 focus:ring-orange-200;
+}
+
+.btn-blue {
+    @apply bg-blue-400 duration-300 cursor-pointer w-full hover:bg-blue-600 text-white font-bold py-1 h-[64px] px-6 border rounded-[10px];
+}
+
+.btn {
+    @apply duration-300 text-white font-bold m-2 py-2 px-4 border rounded-[10px] focus:ring-4;
+}
+
+/* NAV BAR */
+.nav-items {
+    @apply flex items-center;
+}
+
+.nav-item {
+    @apply 
+        m-3 
+        bg-gray-100  
+        rounded-[10px] 
+        p-4 
+        hover:cursor-pointer 
+        hover:bg-gray-400 
+        duration-300 
+        flex 
+        items-center 
+        gap-x-2;
+}
+/* 
+.nav-icon {
+    @apply mx-3;
+} */
+
+/* PAGE LAYOUT*/
+.page-container {
+    @apply grid grid-cols-2 gap-1
+}
+
+/* CARD LAYOUT */
+.card-body {
+    @apply m-10 p-8 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] rounded-[30px];
+}
+
+/* FORMS */
+.form-input {
+    @apply border rounded-[30px] p-5 m-3;
+}
+
+/* Grid Options */
+.option {
+    @apply rounded-[40px] p-10 font-bold hover:bg-opacity-70 hover:text-gray-500 cursor-pointer duration-300; 
+}
+
+.option-icon {
+    font-size: 100px !important;
+}
+
+/* Elements */
+.element_h1 {
+    @apply text-3xl font-bold;
+}
+
+.element_h2 {
+    @apply text-2xl font-bold;
+}
+
+.element_h3 {
+    @apply text-xl font-bold;
+}
+
+.element_p {
+    @apply text-sm;
+}
+
+.element_a {
+    @apply cursor-pointer text-blue-500 underline;
+}
+
+.draggable_style {
+    @apply p-6 bg-white border border-gray-200 rounded-lg m-2 flex space-x-3 hover:cursor-grab active:cursor-grabbing;
+}
+
+/* Membership Navigation Bar */
+
+.m_nav_items {
+    @apply flex space-x-5 mt-5;
+}
+
+.m_nav_item {
+    @apply bg-gray-300 px-10 py-3 rounded-full text-xs cursor-pointer hover:bg-slate-400 duration-300;
+}
+
+.dnd-container {
+    width: 100%;
+}
