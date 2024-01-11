@@ -1,5 +1,8 @@
 import { useState } from "react";
 import { Button } from "@mui/material";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
 import RadioButton from "../../components/RadioButton/RadioButton";
 
@@ -60,12 +63,18 @@ const ScheduleContent = (props) => {
                     </Button>
                 </div>
 
-                <div className={`${styles["schedule-row"]}`}>
-                    <input
-                        type="date"
-                        onChange={zoomLinkChangeHandler}
-                        placeholder="Set a schedule date"
-                    />
+                <div className={`${styles["date-row"]}`}>
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <DatePicker
+                            sx={{
+                                "& .MuiInputBase-root": {
+                                    height: "76px",
+                                    width: "100%",
+                                },
+                                width: "100%",
+                            }}
+                        />
+                    </LocalizationProvider>
                 </div>
 
                 <Button

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, Fragment } from 'react'
 import { Link } from 'react-router-dom';
-import data from '../../../backend/public/collection/1.json'
+// import data from '../../../backend/public/collection/1.json'
 
 // DND-KIT
 import {
