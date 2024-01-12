@@ -1,0 +1,13 @@
+.nav {
+    margin-top: 20px;
+    padding: 0 140px 0 84px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* @apply w-[65%] mx-auto; */
+}
+
+.nav span {
+    color: #F53838;
+}
