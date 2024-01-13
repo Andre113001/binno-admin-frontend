@@ -23,6 +23,7 @@ import ApplicationProcessing from "./pages/ApplicationProcessing/ApplicationProc
 import MembershipManagement from "./pages/MembershipManagement/MembershipManagement";
 import ViewActivities from "./pages/MembershipManagement/ViewActivities";
 import AdminDashbaord from './pages/Dashboard/Dashboard';
+import Notification from "./pages/Notification/Notification";
 
 function App() {
     const [authenticated, setAuthenticated] = useState(false); // You can set this based on the user's authentication status
@@ -73,6 +74,14 @@ function App() {
             </AuthProvider>
         </>
     );
+
+    // return (
+    //     <Routes>
+    //         <Route path="/admin/application_processing" element={<ApplicationProcessing />} />
+    //         <Route path="/admin/notification" element={<Notification />} />
+    //         <Route path="/dashboard" element={<AdminDashbaord />} />
+    //     </Routes>
+    // )
 }
 
 export default App;

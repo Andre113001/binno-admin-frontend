@@ -1,0 +1,90 @@
+.container {
+    padding: 0 114px;
+}
+
+.main {
+    margin-top: 32px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.main h1 {
+    font-size: 40px;
+    font-weight: 700;
+}
+
+.main .hr {
+    border-bottom: 3px solid #D9D9D9;
+}
+
+.option {
+    padding: 0 111px 0 0;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.option-button {
+    height: 39px;
+    background: #CED5DA;
+    width:min-content;
+    display: flex;
+    border-radius: 18px;
+}
+
+.notifs {
+    padding: 0 141px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 21px;
+}
+
+.notif {
+    border: 1px solid red;
+    padding: 18px;
+
+    border-radius: 16px;
+    border: 2px solid #FF7A00;
+    background-image: linear-gradient(to left, rgb(249, 226, 205), rgba(255, 122, 0, 0));
+
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.delete-notif-button {
+    height: 48px;
+    width: 48px;
+    background: #FF6363;
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.notif-message {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.notif-message h1 {
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.notif-message p {
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.read {
+    background: #fff;
+    border-radius: 16px;
+    border: 2px solid #D9D9D9;
+}
