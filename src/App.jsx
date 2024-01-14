@@ -51,6 +51,7 @@ function App() {
                         element={<ViewActivities />}
                     />
                     <Route path="/dashboard" element={<AdminDashbaord />} />
+                    <Route path="/admin/notification" element={<Notification />} />
 
                     <Route
                         path="/private" // Define a common parent route for private routes
@@ -75,6 +76,7 @@ function App() {
         </>
     );
 
+    // practice
     // return (
     //     <Routes>
     //         <Route path="/admin/application_processing" element={<ApplicationProcessing />} />

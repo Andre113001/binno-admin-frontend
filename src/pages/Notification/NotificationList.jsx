@@ -14,7 +14,7 @@ const notifOption = [
     },
 ];
 
-const dummyData = [
+const dummyDatas = [
     {
         title: "Content Moderator",
         message:
@@ -30,10 +30,20 @@ const dummyData = [
 const NotificationList = () => {
     const [activeButton, setButtonActive] = useState(1);
     const [isDelete, setIsDelete] = useState(false);
+    const [dummyData, setDummyData] = useState(dummyDatas);
 
     const buttonOptionHandler = (index) => {
         setButtonActive(index);
     };
+
+    const deleteButtonHandler = () => {
+        setIsDelete(prevIsDelete => !prevIsDelete)
+    }
+
+    const deleteNotifHandler = (event, dataIndex) => {
+        event.preventDefault();
+        setDummyData(dummyData.filter((data, index) => index != dataIndex))
+    }
 
     const optionButton = notifOption.map((button, index) => (
         <Button
@@ -47,6 +57,7 @@ const NotificationList = () => {
                 fontSize: "16px",
                 borderRadius: "18px",
                 padding: "10px 24px",
+                textTransform: 'capitalize',
                 "&:hover": {
                     background: activeButton === index ? "#5C9FEF" : "inherit",
                 },
@@ -58,8 +69,8 @@ const NotificationList = () => {
     ));
 
     const content = dummyData.map((data, index) => (
-        <Link key={index} className={`${styles["notif"]}`}>
-            <IconButton
+        <Link to={'/dashboard'} key={index} className={`${styles["notif"]}`}>
+            {isDelete && <IconButton onClick={(event) => deleteNotifHandler(event, index)}
                 sx={{
                     height: "48px",
                     width: "48px",
@@ -68,7 +79,7 @@ const NotificationList = () => {
                 }}
             >
                 <DeleteNotifIcon />
-            </IconButton>
+            </IconButton>}
 
             <div className={`${styles["notif-message"]}`}>
                 <h1>{data.title}</h1>
@@ -84,9 +95,9 @@ const NotificationList = () => {
                     {optionButton}
                 </div>
                 <div className={`${styles["delete-button"]}`}>
-                    <IconButton aria-label="delete">
+                    {isDelete ? <Button sx={{textTransform: 'capitalize', fontSize: '16px'}} onClick={deleteButtonHandler}>Cancel</Button> : <IconButton aria-label="delete" onClick={deleteButtonHandler}>
                         <DeleteIcon />
-                    </IconButton>
+                    </IconButton>}
                 </div>
             </div>
 
