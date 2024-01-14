@@ -1,32 +1,32 @@
-import { useState } from "react";
-import "./App.css";
+import { useState } from 'react'
+import './App.css'
 
-import { Routes, Route, Outlet } from "react-router-dom";
+import { Routes, Route, Outlet } from 'react-router-dom'
 
 // Hooks
-import { AuthProvider } from "./hooks/AuthContext";
+import { AuthProvider } from './hooks/AuthContext'
 
 // Pages
-import Login from "./pages/Login";
-import Members from "./pages/Members";
-import Dashboard from "./pages/Dashboard";
-import SystemSettings from "./pages/SystemSettings";
-import Announce from "./pages/Announce";
-import Contents from "./pages/Contents";
-import TestComponents from "./pages/TestComponents";
-import Missing from "./pages/Missing";
-import Requests from "./pages/Requests";
-import Calendar from "./pages/Calendar";
+import Login from './pages/Login'
+import Members from './pages/Members'
+// import Dashboard from "./pages/Dashboard";
+import SystemSettings from './pages/SystemSettings'
+import Announce from './pages/Announce'
+import Contents from './pages/Contents'
+import TestComponents from './pages/TestComponents'
+import Missing from './pages/Missing'
+import Requests from './pages/Requests'
+import Calendar from './pages/Calendar'
 
-import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
-import ApplicationProcessing from "./pages/ApplicationProcessing/ApplicationProcessing";
-import MembershipManagement from "./pages/MembershipManagement/MembershipManagement";
-import ViewActivities from "./pages/MembershipManagement/ViewActivities";
-import AdminDashbaord from './pages/Dashboard/Dashboard';
-import Notification from "./pages/Notification/Notification";
+import PrivateRoute from './components/PrivateRoute/PrivateRoute'
+import ApplicationProcessing from './pages/ApplicationProcessing/ApplicationProcessing'
+import MembershipManagement from './pages/MembershipManagement/MembershipManagement'
+import ViewActivities from './pages/MembershipManagement/ViewActivities'
+import AdminDashboard from './pages/Dashboard/Dashboard'
+import Notification from './pages/Notification/Notification'
 
 function App() {
-    const [authenticated, setAuthenticated] = useState(false); // You can set this based on the user's authentication status
+    const [authenticated, setAuthenticated] = useState(false) // You can set this based on the user's authentication status
 
     return (
         <>
@@ -35,7 +35,7 @@ function App() {
                     {/* Public Routes */}
                     <Route path="/" element={<Login />} />
                     <Route path="/test" element={<TestComponents />} />
-                    <Route path="/dashboard" element={<Dashboard />} />
+                    {/* <Route path="/dashboard" element={<Dashboard />} /> */}
                     <Route path="/calendar" element={<Calendar />} />
                     <Route path="/announce" element={<Announce />} />
                     <Route
@@ -50,7 +50,7 @@ function App() {
                         path="/admin/membership_management/members"
                         element={<ViewActivities />}
                     />
-                    <Route path="/dashboard" element={<AdminDashbaord />} />
+                    <Route path="/dashboard" element={<AdminDashboard />} />
                     <Route path="/admin/notification" element={<Notification />} />
 
                     <Route
@@ -74,7 +74,7 @@ function App() {
                 </Routes>
             </AuthProvider>
         </>
-    );
+    )
 
     // practice
     // return (
@@ -86,4 +86,4 @@ function App() {
     // )
 }
 
-export default App;
+export default App
