@@ -1,67 +1,89 @@
-import { Button } from "@mui/material";
-import styles from "./ApplicationProcessing.module.css";
-import EnablerImage from "./EnablerImage";
-import Dropdown from "../../components/Dropdowmn/Dropdown";
+import { Button } from '@mui/material'
+import styles from './ApplicationProcessing.module.css'
+import EnablerImage from './EnablerImage'
+import Dropdown from '../../components/Dropdowmn/Dropdown'
+import Moment from 'react-moment'
+import { useState } from 'react'
 
-const Document = () => {
+const Document = (props) => {
+    const { appDocs } = props
+
+    const [selected, setSelected] = useState(1)
+
+    const handleSelect = (e) => {
+        setSelected(e)
+    }
     return (
-        <div className={`${styles["main"]}`}>
-            <div className={`${styles["date-and-number"]}`}>
-                <div className={`${styles["number"]}`}>
-                    <p>1002-2203-2123</p>
+        <div className={`${styles['main']}`}>
+            <div className={`${styles['date-and-number']}`}>
+                <div className={`${styles['number']}`}>
+                    <p>#{appDocs.app_id}</p>
                 </div>
 
-                <div className={`${styles["date"]}`}>
-                    <p>01 - 02- 2023</p>
+                <div className={`${styles['date']}`}>
+                    <p>
+                        <Moment format="MM-DD-YYYY">
+                            {appDocs.app_datecreated}
+                        </Moment>
+                    </p>
                 </div>
             </div>
 
-            <div className={`${styles["enabler-title-section"]}`}>
-                <div className={`${styles["enabler-title"]}`}>
-                    <h1>Startup Enabler Name</h1>
+            <div className={`${styles['enabler-title-section']}`}>
+                <div className={`${styles['enabler-title']}`}>
+                    <h1>{appDocs.app_institution}</h1>
                     <p>Interview Status: Processing</p>
                 </div>
 
-                <div className={`${styles["enabler-info"]}`}>
+                <div className={`${styles['enabler-info']}`}>
                     <p>
-                        <b>From:</b> Juan Dela Cruz
+                        <b>From:</b> {appDocs.app_email}
                     </p>
                     <p>
-                        <b>Address:</b> Legazpi City, Albay
+                        <b>Address:</b> {appDocs.app_address}
                     </p>
                     <p>
-                        <b>Type:</b> Startup Enabler (Local Government Unit)
+                        <b>Type:</b> {appDocs.app_type}{' '}
+                        {appDocs.app_type === 'TBI'
+                            ? '(Technology Business Incubators)'
+                            : appDocs.app_type === 'LGU'
+                            ? '(Local Government Unit)'
+                            : appDocs.app_type === 'SUC'
+                            ? '(State Univerities & Colleges)'
+                            : ''}
                     </p>
                 </div>
             </div>
 
-            <div className={`${styles["enabler-document"]}`}>
-                <div className={`${styles["file"]}`}>
+            <div className={`${styles['enabler-document']}`}>
+                <div className={`${styles['file']}`}>
                     <h1>Document</h1>
-                    <EnablerImage />
+                    <EnablerImage appDocs={appDocs} />
                 </div>
 
-                <div className={`${styles["enabler-button"]}`}>
+                <div className={`${styles['enabler-button']}`}>
                     <Dropdown
+                        selected={selected}
+                        onSelect={handleSelect}
                         style={{
-                            height: "44px",
-                            width: "256px",
-                            background: "#D9D9D9",
-                            borderRadius: "10px",
-                            fontWeight: "700",
+                            height: '44px',
+                            width: '256px',
+                            background: '#D9D9D9',
+                            borderRadius: '10px',
+                            fontWeight: '700',
                         }}
                     />
                     <Button
                         sx={{
-                            background: "#FF7A00",
-                            height: "48px",
-                            color: "#000",
-                            fontSize: "15px",
-                            fontWeight: "700",
-                            width: "268px",
-                            borderRadius: "30px",
-                            "&:hover": {
-                                background: "#FF7A00",
+                            background: '#FF7A00',
+                            height: '48px',
+                            color: '#000',
+                            fontSize: '15px',
+                            fontWeight: '700',
+                            width: '268px',
+                            borderRadius: '30px',
+                            '&:hover': {
+                                background: '#FF7A00',
                             },
                         }}
                     >
@@ -70,7 +92,7 @@ const Document = () => {
                 </div>
             </div>
         </div>
-    );
-};
+    )
+}
 
-export default Document;
+export default Document
