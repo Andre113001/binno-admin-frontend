@@ -23,6 +23,7 @@ import ApplicationProcessing from "./pages/ApplicationProcessing/ApplicationProc
 import MembershipManagement from "./pages/MembershipManagement/MembershipManagement";
 import ViewActivities from "./pages/MembershipManagement/ViewActivities";
 import AdminDashbaord from './pages/Dashboard/Dashboard';
+import ActivityMonitoring from "./pages/ActivityMonitoring/ActivityMonitoring";
 
 function App() {
     const [authenticated, setAuthenticated] = useState(false); // You can set this based on the user's authentication status
@@ -50,6 +51,10 @@ function App() {
                         element={<ViewActivities />}
                     />
                     <Route path="/dashboard" element={<AdminDashbaord />} />
+                    <Route
+                        path="/admin/activity_monitoring"
+                        element={<ActivityMonitoring />}
+                    />
 
                     <Route
                         path="/private" // Define a common parent route for private routes
