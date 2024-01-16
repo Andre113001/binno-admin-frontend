@@ -1,12 +1,12 @@
 import { useState } from 'react'
-import { Document, Page, pdfjs } from 'react-pdf'
+// import { Document, Page, pdfjs } from 'react-pdf'
 
 import enaje from '../../assets/asd.pdf'
 // import enaje from '../../assets/ENAJE_TeddyMarc.pdf'
-pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-    'pdfjs-dist/build/pdf.worker.min.js',
-    import.meta.url
-).toString()
+// pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+//     'pdfjs-dist/build/pdf.worker.min.js',
+//     import.meta.url
+// ).toString()
 
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa'
 

@@ -7,7 +7,7 @@ import dayjs from 'dayjs'
 import { Link } from 'react-router-dom'
 
 // Components
-import Topbar from '../components/Topbar/Topbar'
+// import Topbar from '../components/Topbar/Topbar'
 import Back from '../components/Back/Back'
 // import { Calendar as CalendarComponent} from '../components/Calendar/Calendar'
 
@@ -25,6 +25,7 @@ import useCustomModal from '../hooks/useCustomModal'
 import { ScheduleSend, Visibility } from '@mui/icons-material'
 
 import useHttp from '../hooks/http-hook'
+import Topbar from './Dashboard/Topbar/Topbar'
 
 const Calendar = () => {
     const { sendRequest, isLoading } = useHttp()
