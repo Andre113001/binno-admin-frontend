@@ -2,19 +2,16 @@ import { Fragment } from "react";
 import { Link } from "react-router-dom";
 import InputAdornment from "@mui/material/InputAdornment";
 
-
-import styles from './MembershipManagement.module.css';
-import processingStyle from '../ApplicationProcessing/ApplicationProcessing.module.css';
+import styles from './ActivityMonitoring.module.css';
 import SearchIcon from "@mui/icons-material/Search";
 
 // import Topbar from "../../components/Topbar/Topbar";
 import Back from "../../components/Back/Back";
-import Dropdown from "../../components/Dropdowmn/Dropdown";
 import { TextField } from "@mui/material";
-import MembershipManagementList from "./MembershipManagementList";
+import ActivityMonitoringList from "./ActivityMonitoringList";
 import Topbar from "../Dashboard/Topbar/Topbar";
 
-const MembershipManagement = () => {
+const ActivityMonitoring = () => {
     return (
         <Fragment>
             <Topbar />
@@ -25,26 +22,15 @@ const MembershipManagement = () => {
 
                 <div className={`${styles['management-title']}`}>
                     <div className={`${styles['title']}`}>
-                        <h1>Members</h1>
+                        <h1>Activities</h1>
                     </div>
-
-                    <Link className={`${styles['management-request']}`}>
-                        <p>Request</p>
-                        <div className={`${styles['circle']}`}>
-
-                        </div>
-                    </Link>
                 </div>
 
-                <div className={`${processingStyle["filters"]}`}>
-                    <div className={`${processingStyle["section_1"]}`}>
-                        <Dropdown />
-                    </div>
-
+                <div className={`${styles["filters"]}`}>
                     <div>
                         <div>
                             <TextField
-                                placeholder="Search"
+                                placeholder="Search Author"
                                 InputProps={{
                                     startAdornment: (
                                         <InputAdornment position="start">
@@ -56,7 +42,7 @@ const MembershipManagement = () => {
                                     height: "35px",
                                     width: '398px',
                                     "& input": {
-                                        padding: "6px 0 6px 0", // Adjust the padding if needed
+                                        padding: "6px 0 6px 0", 
                                     },
                                     "& .MuiOutlinedInput-root": {
                                         borderRadius: "10px",
@@ -67,18 +53,19 @@ const MembershipManagement = () => {
                     </div>
                 </div>
 
-                <div className={`${processingStyle["application-processing-table"]}`}>
+                <div className={`${styles["application-processing-table"]}`}>
                     <table width={"100%"}>
                         <thead>
-                            <tr className={`${processingStyle["table-heading"]}`}>
-                                <th>Member's ID</th>
-                                <th>Name of Institution</th>
-                                <th>Actions</th>
+                            <tr className={`${styles["table-heading"]}`}>
+                                <th>Application ID</th>
+                                <th>Author</th>
+                                <th>Name of Activity</th>
+                                <th>Date</th>
                             </tr>
                         </thead>
-                        <tbody className={`${processingStyle["table-body"]}`}>
-                            <tr className={`${processingStyle["table-row"]}`}>
-                                <MembershipManagementList
+                        <tbody className={`${styles["table-body"]}`}>
+                            <tr className={`${styles["table-row"]}`}>
+                                <ActivityMonitoringList
                                     // onOpenModal={documentHandler}
                                 />
                             </tr>
@@ -90,4 +77,4 @@ const MembershipManagement = () => {
     );
 };
 
-export default MembershipManagement;
+export default ActivityMonitoring;

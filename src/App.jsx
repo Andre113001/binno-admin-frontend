@@ -1,31 +1,33 @@
-import { useState } from "react";
-import "./App.css";
+import { useState } from 'react'
+import './App.css'
 
-import { Routes, Route, Outlet } from "react-router-dom";
+import { Routes, Route, Outlet } from 'react-router-dom'
 
 // Hooks
-import { AuthProvider } from "./hooks/AuthContext";
+import { AuthProvider } from './hooks/AuthContext'
 
 // Pages
-import Login from "./pages/Login";
-import Members from "./pages/Members";
-import Dashboard from "./pages/Dashboard";
-import SystemSettings from "./pages/SystemSettings";
-import Announce from "./pages/Announce";
-import Contents from "./pages/Contents";
-import TestComponents from "./pages/TestComponents";
-import Missing from "./pages/Missing";
-import Requests from "./pages/Requests";
-import Calendar from "./pages/Calendar";
+import Login from './pages/Login'
+import Members from './pages/Members'
+// import Dashboard from "./pages/Dashboard";
+import SystemSettings from './pages/SystemSettings'
+import Announce from './pages/Announce'
+import Contents from './pages/Contents'
+import TestComponents from './pages/TestComponents'
+import Missing from './pages/Missing'
+import Requests from './pages/Requests'
+import Calendar from './pages/Calendar'
 
-import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
-import ApplicationProcessing from "./pages/ApplicationProcessing/ApplicationProcessing";
-import MembershipManagement from "./pages/MembershipManagement/MembershipManagement";
-import ViewActivities from "./pages/MembershipManagement/ViewActivities";
-import AdminDashbaord from './pages/Dashboard/Dashboard';
+import PrivateRoute from './components/PrivateRoute/PrivateRoute'
+import ApplicationProcessing from './pages/ApplicationProcessing/ApplicationProcessing'
+import MembershipManagement from './pages/MembershipManagement/MembershipManagement'
+import ViewActivities from './pages/MembershipManagement/ViewActivities'
+import AdminDashboard from './pages/Dashboard/Dashboard'
+import Notification from './pages/Notification/Notification'
+import ActivityMonitoring from "./pages/ActivityMonitoring/ActivityMonitoring";
 
 function App() {
-    const [authenticated, setAuthenticated] = useState(false); // You can set this based on the user's authentication status
+    const [authenticated, setAuthenticated] = useState(false) // You can set this based on the user's authentication status
 
     return (
         <>
@@ -34,6 +36,10 @@ function App() {
                     {/* Public Routes */}
                     <Route path="/" element={<Login />} />
                     <Route path="/test" element={<TestComponents />} />
+<<<<<<< HEAD
+=======
+                    {/* <Route path="/dashboard" element={<Dashboard />} /> */}
+>>>>>>> ee16de47fb4d0c0fd0b6bc34f6500f523e0c2502
                     <Route path="/calendar" element={<Calendar />} />
                     <Route path="/announce" element={<Announce />} />
                     <Route
@@ -48,7 +54,12 @@ function App() {
                         path="/admin/membership_management/members"
                         element={<ViewActivities />}
                     />
-                    <Route path="/dashboard" element={<AdminDashbaord />} />
+                    <Route path="/dashboard" element={<AdminDashboard />} />
+                    <Route path="/admin/notification" element={<Notification />} />
+                    <Route
+                        path="/admin/activity_monitoring"
+                        element={<ActivityMonitoring />}
+                    />
 
                     <Route
                         path="/private" // Define a common parent route for private routes
@@ -71,7 +82,16 @@ function App() {
                 </Routes>
             </AuthProvider>
         </>
-    );
+    )
+
+    // practice
+    // return (
+    //     <Routes>
+    //         <Route path="/admin/application_processing" element={<ApplicationProcessing />} />
+    //         <Route path="/admin/notification" element={<Notification />} />
+    //         <Route path="/dashboard" element={<AdminDashbaord />} />
+    //     </Routes>
+    // )
 }
 
-export default App;
+export default App
