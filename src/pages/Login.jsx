@@ -10,6 +10,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import ErrorIcon from '@mui/icons-material/Error'
+import axios from 'axios';
 
 import '../App.css'
 import {useNavigate} from 'react-router-dom'
@@ -50,30 +51,22 @@ export default function Login() {
         }
 
 
-        const fetchData = async() => {
-            try {
-                const res = await fetch('http://localhost:3100/api/login', {
-                    method: 'POST',
-                    body: JSON.stringify({...requestData}),
-                    headers: {
-                        'Content-Type': 'application/json',
-                    }
-                })
-                const data = await res.json()
-                console.log(data.token);
-                
-                if (data.token) {
-                    localStorage.setItem('access', data.token);
-                    login(); // Set authenticated to true
-                    navigate('/dashboard');
-                  } else {
-                    handleOpen();
-                }
-            } catch(err) {
-                console.err
+        try {
+            const response = await axios.post('/api/login', requestData);
+            const data = response.data;  // Axios automatically parses the JSON response
+            console.log(data.token);
+    
+            if (data.token) {
+                localStorage.setItem('access', data.token);
+                login(); // Set authenticated to true
+                navigate('/dashboard');
+            } else {
+                handleOpen();
             }
+        } catch (err) {
+            console.error(err);
         }
-        fetchData();
+        
     };
 
     return (

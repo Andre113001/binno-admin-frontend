@@ -88,14 +88,6 @@
     @apply text-3xl font-bold;
 }
 
-.element_h2 {
-    @apply text-2xl font-bold;
-}
-
-.element_h3 {
-    @apply text-xl font-bold;
-}
-
 .element_p {
     @apply text-sm;
 }

@@ -5,7 +5,7 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
   server: {
     proxy: {
-      '/api': 'http://localhost:3100/'
+      '/api': 'https://binno-admin-deploy-production.up.railway.app'
     }
   },  
   plugins: [
