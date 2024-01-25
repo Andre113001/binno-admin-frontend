@@ -29,7 +29,7 @@ const ApplicationProcessing = () => {
     useEffect(() => {
         const loadData = async () => {
             const res = await sendRequest({
-                url: `/api/application`,
+                url: `${import.meta.env.VITE_BACKEND_DOMAIN}/application`,
             })
 
             setApplications(res)
@@ -63,10 +63,10 @@ const ApplicationProcessing = () => {
                 </div>
 
                 <div className={`${styles['filters']}`}>
-                    <div className={`${styles['section_1']}`}>
+                    {/* <div className={`${styles['section_1']}`}>
                         <Dropdown />
                         <Dropdown />
-                    </div>
+                    </div> */}
 
                     <div>
                         <div>

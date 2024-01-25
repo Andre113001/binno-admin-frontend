@@ -24,25 +24,31 @@ const AdminDashboard = () => {
     useEffect(() => {
         const loadData = async () => {
             const res = await sendRequest({
-                url: `https://binno-admin-deploy-production-f99a.up.railway.app/api/metrics/contents`,
+                url: `${import.meta.env.VITE_BACKEND_DOMAIN}/metrics/contents`,
             })
             const res2 = await sendRequest({
-                url: `https://binno-admin-deploy-production-f99a.up.railway.app/api/metrics/members`,
+                url: `${import.meta.env.VITE_BACKEND_DOMAIN}/metrics/members`,
             })
             const res3 = await sendRequest({
-                url: `https://binno-admin-deploy-production-f99a.up.railway.app/api/metrics/newsletter-subscriber`,
+                url: `${
+                    import.meta.env.VITE_BACKEND_DOMAIN
+                }/metrics/newsletter-subscriber`,
             })
             const res4 = await sendRequest({
-                url: `https://binno-admin-deploy-production-f99a.up.railway.app/api/metrics/enablers`,
+                url: `${import.meta.env.VITE_BACKEND_DOMAIN}/metrics/enablers`,
             })
             const res5 = await sendRequest({
-                url: `https://binno-admin-deploy-production-f99a.up.railway.app/api/metrics/companies`,
+                url: `${import.meta.env.VITE_BACKEND_DOMAIN}/metrics/companies`,
             })
             const res6 = await sendRequest({
-                url: `https://binno-admin-deploy-production-f99a.up.railway.app/api/metrics/pending-posts`,
+                url: `${
+                    import.meta.env.VITE_BACKEND_DOMAIN
+                }/metrics/pending-posts`,
             })
             const res7 = await sendRequest({
-                url: `https://binno-admin-deploy-production-f99a.up.railway.app/api/metrics/pending-members`,
+                url: `${
+                    import.meta.env.VITE_BACKEND_DOMAIN
+                }/metrics/pending-members`,
             })
 
             setMetrics({
@@ -156,7 +162,7 @@ const AdminDashboard = () => {
                     </div>
 
                     <div className={`${styles['pending-content']}`}>
-                        <Link
+                        {/* <Link
                             className={`${styles['pending']}`}
                             to={'/admin/application_processing'}
                         >
@@ -186,7 +192,7 @@ const AdminDashboard = () => {
                                     }}
                                 />
                             </IconButton>
-                        </Link>
+                        </Link> */}
 
                         <Link
                             className={`${styles['pending']}`}

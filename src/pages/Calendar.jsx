@@ -43,7 +43,9 @@ const Calendar = () => {
             // Handle the data from the response
             // return response.data;
             // You can update your state or perform other actions with the data
-            const res = await sendRequest({ url: `/api/schedule/${date}` })
+            const res = await sendRequest({
+                url: `${import.meta.env.VITE_BACKEND_DOMAIN}/schedule/${date}`,
+            })
             return res
         } catch (error) {
             // Handle errors
@@ -73,12 +75,15 @@ const Calendar = () => {
 
     const handleSubmitReschedule = async (sched_id, res) => {
         try {
-            const response = await axios.post(`/api/schedule/sched-resched`, {
-                scheduleId: sched_id,
-                newDate: newSchedDate.format('YYYY-MM-DD'),
-                newStart: timeStart.format('HH:mm'),
-                newEnd: timeEnd.format('HH:mm'),
-            })
+            const response = await axios.post(
+                `${import.meta.env.VITE_BACKEND_DOMAIN}/schedule/sched-resched`,
+                {
+                    scheduleId: sched_id,
+                    newDate: newSchedDate.format('YYYY-MM-DD'),
+                    newStart: timeStart.format('HH:mm'),
+                    newEnd: timeEnd.format('HH:mm'),
+                }
+            )
 
             console.log('Response from localhost:3100', response.data)
             // Add any additional logic here based on the response if needed

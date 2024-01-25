@@ -5,13 +5,25 @@ import Dropdown from '../../components/Dropdowmn/Dropdown'
 import Moment from 'react-moment'
 import { useState } from 'react'
 
+import useHttp from '../../hooks/http-hook'
+
 const Document = (props) => {
     const { appDocs } = props
+
+    const { sendRequest, isLoading } = useHttp()
 
     const [selected, setSelected] = useState(1)
 
     const handleSelect = (e) => {
         setSelected(e)
+    }
+
+    const handleConfirm = async () => {
+        const res = await sendRequest({
+            url: `${import.meta.env.VITE_BACKEND_DOMAIN}/application`,
+            method: 'PATCH',
+            body: JSON.stringify({ appId: appDocs.app_id, isApproved: selected === 1 ? true : false }),
+        })
     }
     return (
         <div className={`${styles['main']}`}>
@@ -58,7 +70,7 @@ const Document = (props) => {
             <div className={`${styles['enabler-document']}`}>
                 <div className={`${styles['file']}`}>
                     <h1>Document</h1>
-                    <EnablerImage appDocs={appDocs} />
+                    <EnablerImage appDocs={appDocs} id={appDocs.app_id} />
                 </div>
 
                 <div className={`${styles['enabler-button']}`}>
@@ -86,8 +98,9 @@ const Document = (props) => {
                                 background: '#FF7A00',
                             },
                         }}
+                        onClick={handleConfirm}
                     >
-                        Confirm
+                        {!isLoading ? 'Confirm' : 'Confirming...'}
                     </Button>
                 </div>
             </div>
