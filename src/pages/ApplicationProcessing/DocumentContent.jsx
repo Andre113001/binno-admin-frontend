@@ -22,8 +22,13 @@ const Document = (props) => {
         const res = await sendRequest({
             url: `${import.meta.env.VITE_BACKEND_DOMAIN}/application`,
             method: 'PATCH',
-            body: JSON.stringify({ appId: appDocs.app_id, isApproved: selected === 1 ? true : false }),
+            body: JSON.stringify({
+                appId: appDocs.app_id,
+                isApproved: selected === 1 ? true : false,
+            }),
         })
+
+        // ilapag ang code ng email; 
     }
     return (
         <div className={`${styles['main']}`}>
