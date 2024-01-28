@@ -4,6 +4,7 @@ import EnablerImage from './EnablerImage'
 import Dropdown from '../../components/Dropdowmn/Dropdown'
 import Moment from 'react-moment'
 import { useState } from 'react'
+import axios from 'axios'
 
 import useHttp from '../../hooks/http-hook'
 
@@ -28,7 +29,31 @@ const Document = (props) => {
             }),
         })
 
-        // ilapag ang code ng email; 
+        console.log(res);
+
+                                axios.post('http://localhost:3400/membership/approved', {
+                                    receiver: res.email,
+                                    accesskey: res.randomDigits,
+                                    tmpPassword: res.randomDigits
+                                },{
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                    },
+                                    withCredentials: true
+                                });
+        // const res2 = await sendRequest({
+        //     url: `https://binno-email-production.up.railway.app/membership/approved`,
+        //     method: 'POST',
+        //     body: JSON.stringify({
+        //         receiver: res.email,
+        //         accesskey: res.unhashed,
+        //         tmpPassword: res.unhashed
+        //     }),
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //     }
+        // })
+        // console.log(res2)
     }
     return (
         <div className={`${styles['main']}`}>

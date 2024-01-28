@@ -36,10 +36,7 @@ function App() {
                     {/* Public Routes */}
                     <Route path="/" element={<Login />} />
                     <Route path="/test" element={<TestComponents />} />
-<<<<<<< HEAD
-=======
                     {/* <Route path="/dashboard" element={<Dashboard />} /> */}
->>>>>>> ee16de47fb4d0c0fd0b6bc34f6500f523e0c2502
                     <Route path="/calendar" element={<Calendar />} />
                     <Route path="/announce" element={<Announce />} />
                     <Route

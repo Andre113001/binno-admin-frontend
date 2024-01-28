@@ -11,6 +11,7 @@ import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
 import ErrorIcon from '@mui/icons-material/Error'
 import axios from 'axios';
+import useHttp from '../hooks/http-hook'
 
 import '../App.css'
 import { useNavigate } from 'react-router-dom'
@@ -40,6 +41,7 @@ export default function Login() {
     const { handleOpen, handleClose, CustomModal } = useCustomModal()
     const navigate = useNavigate()
     const { login } = useAuth()
+    const { sendRequest, isLoading } = useHttp();
 
     const handleSubmit = async (event) => {
         event.preventDefault()
@@ -51,25 +53,12 @@ export default function Login() {
             password: password,
         }
 
-<<<<<<< HEAD
-
-        try {
-            const response = await axios.post('/api/login', requestData);
-            const data = response.data;  // Axios automatically parses the JSON response
-            console.log(data.token);
-    
-            if (data.token) {
-                localStorage.setItem('access', data.token);
-                login(); // Set authenticated to true
-                navigate('/dashboard');
-            } else {
-                handleOpen();
-=======
         const fetchData = async () => {
             try {
-                const res = await fetch(
-                    `${import.meta.env.VITE_BACKEND_DOMAIN}/login`,
+
+                const res = await sendRequest(
                     {
+                        url: `${import.meta.env.VITE_BACKEND_DOMAIN}/login`,
                         method: 'POST',
                         body: JSON.stringify({ ...requestData }),
                         headers: {
@@ -77,35 +66,26 @@ export default function Login() {
                         },
                     }
                 )
-                const data = await res.json()
-                console.log(data.token)
-
-                if (data.token) {
-                    localStorage.setItem('access', data.token)
+            
+                if (res.token) {
+                    localStorage.setItem('access', res.token)
                     login() // Set authenticated to true
                     navigate('/dashboard')
                 } else {
-                    handleOpen()
+                    // handleOpen()
+                    console.log("Invalid Registration");
                 }
             } catch (err) {
                 console.err
->>>>>>> ee16de47fb4d0c0fd0b6bc34f6500f523e0c2502
             }
-        } catch (err) {
-            console.error(err);
-        }
-<<<<<<< HEAD
-        
-    };
-=======
+        } 
         fetchData()
     }
->>>>>>> ee16de47fb4d0c0fd0b6bc34f6500f523e0c2502
 
     return (
         <Container component="main" maxWidth="xs">
             <CssBaseline />
-            {open && (
+            {/* {open && (
                 <CustomModal
                     open={open}
                     handleClose={handleClose}
@@ -120,7 +100,7 @@ export default function Login() {
                         <button className="btn-blue">Button from test</button>
                     }
                 />
-            )}
+            )} */}
             <Box
                 sx={{
                     marginTop: 8,
@@ -169,6 +149,7 @@ export default function Login() {
                         style={{
                             backgroundColor: '#ff7a00',
                         }}
+                        disabled={isLoading}
                     >
                         Sign-In
                     </Button>

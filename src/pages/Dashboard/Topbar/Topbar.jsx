@@ -34,7 +34,7 @@ function Topbar() {
                             src="../../../../public/img/binno-logo.png"
                             alt="Logo"
                         />
-                        <span>System Administrator</span>
+                        <span className="text-black">System Administrator</span>
                     </Link>
                 </div>
 
@@ -53,7 +53,7 @@ function Topbar() {
                     </Link> */}
                     <span
                         onClick={handleDestroyToken}
-                        className="m-3 rounded-[10px] p-4 hover:bg-gray-300 hover:cursor-pointer duration-300 flex items-center gap-x-2"
+                        className="m-3 rounded-[10px] p-4 text-red-500 hover:bg-gray-300 hover:cursor-pointer duration-300 flex items-center gap-x-2"
                     >
                         <LogoutIcon className="nav-icon" />
                         Logout

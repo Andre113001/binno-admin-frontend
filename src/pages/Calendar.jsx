@@ -39,10 +39,7 @@ const Calendar = () => {
 
     const fetchDate = async (date) => {
         try {
-            // const response = await axios.get(`/api/schedule/${date}`);
-            // Handle the data from the response
-            // return response.data;
-            // You can update your state or perform other actions with the data
+            console.log(date);
             const res = await sendRequest({
                 url: `${import.meta.env.VITE_BACKEND_DOMAIN}/schedule/${date}`,
             })
