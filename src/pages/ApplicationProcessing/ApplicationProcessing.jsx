@@ -15,7 +15,7 @@ import ApplicationProcessingModalContent from './ApplicationProcessingModalConte
 import ApplicationProcessingModalSchedule from './ApplicationProcessingModalSchedule'
 
 import useHttp from '../../hooks/http-hook'
-import Topbar from '../Dashboard/Topbar/Topbar'
+import Topbar from '../../components/Topbar/Topbar'
 
 const ApplicationProcessing = () => {
     const [openModal, setOpenModal] = useState(false)

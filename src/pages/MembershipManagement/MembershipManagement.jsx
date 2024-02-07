@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { Fragment, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import InputAdornment from "@mui/material/InputAdornment";
 
@@ -12,9 +12,24 @@ import Back from "../../components/Back/Back";
 import Dropdown from "../../components/Dropdowmn/Dropdown";
 import { TextField } from "@mui/material";
 import MembershipManagementList from "./MembershipManagementList";
-import Topbar from "../Dashboard/Topbar/Topbar";
+import Topbar from "../../components/Topbar/Topbar";
+import useHttp from "../../hooks/http-hook";
 
 const MembershipManagement = () => {
+    const [ members, setMembers ] = useState();
+    const { sendRequest, isLoading} = useHttp();
+
+    useEffect(() => {
+        const loadData = async () => {
+            const result = await sendRequest({
+                url: `${import.meta.env.VITE_BACKEND_DOMAIN}/get/users`,
+            });
+            setMembers(result);
+        }
+
+        loadData();
+    }, [sendRequest])
+
     return (
         <Fragment>
             <Topbar />
@@ -29,10 +44,8 @@ const MembershipManagement = () => {
                     </div>
 
                     <Link className={`${styles['management-request']}`}>
-                        <p>Request</p>
-                        <div className={`${styles['circle']}`}>
-
-                        </div>
+                        <p>Request for application</p>
+                        {/* <div className={`${styles['circle']}`} /> */}
                     </Link>
                 </div>
 
@@ -77,11 +90,13 @@ const MembershipManagement = () => {
                             </tr>
                         </thead>
                         <tbody className={`${processingStyle["table-body"]}`}>
-                            <tr className={`${processingStyle["table-row"]}`}>
+                            {members?.map((member) => (
+                                <tr className={`${processingStyle["table-row"]}`} key={member.member_id}>
                                 <MembershipManagementList
-                                    // onOpenModal={documentHandler}
+                                    data={member}
                                 />
                             </tr>
+                            ))}
                         </tbody>
                     </table>
                 </div>

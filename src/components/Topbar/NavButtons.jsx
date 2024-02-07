@@ -3,6 +3,7 @@ import { Fragment, useState } from 'react';
 import NearMeOutlinedIcon from '@mui/icons-material/NearMeOutlined';
 import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
 import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
+import { Person, AccessTime } from '@mui/icons-material'
 import { useNavigate, useLocation } from 'react-router-dom';
 
 const NavButtons = () => {
@@ -20,6 +21,16 @@ const NavButtons = () => {
             icon: <CalendarMonthOutlinedIcon style={{ fontSize: '24px' }} />,
             name: 'Calendar',
             redirect: '/calendar',
+        },
+        {
+            icon: <Person style={{ fontSize: '24px' }}/>,
+            name: 'Members',
+            redirect: '/admin/membership_management'
+        },
+        {
+            icon: <AccessTime style={{ fontSize: '24px' }}/>,
+            name: 'Activities',
+            redirect: '/admin/membership_management/members'
         },
         // {
         //     icon: (

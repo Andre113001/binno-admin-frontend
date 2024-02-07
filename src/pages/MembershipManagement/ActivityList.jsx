@@ -1,12 +1,16 @@
 import { Fragment } from "react";
+import moment from "moment";
+import Moment from "react-moment";
 
 const ActivitiesList = (props) => {
+    const item = props.item;
+    console.log(item);
     return (
         <Fragment>
-            <td>08-02-2023</td>
-            <td>Name of Auther</td>
-            <td>Name of activity</td>
-            <td>Activity Date</td>
+            <td>{item.history_id}</td>
+            <td>{item.history_author}</td>
+            <td>{item.history_text}</td>
+            <td><Moment format="MMMM DD, YYYY | hh:mm A">{item.history_datecreated}</Moment></td>
         </Fragment>
     );
 };

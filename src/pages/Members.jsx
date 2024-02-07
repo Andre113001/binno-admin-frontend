@@ -9,7 +9,7 @@ import Button from '../components/Button/Button';
 import Back from '../components/Back/Back';
 import MemberNav from '../components/MemberNav/MemberNav';
 import {Delete as DeleteIcon, Send as SendIcon} from '@mui/icons-material';
-import Topbar from './Dashboard/Topbar/Topbar';
+import Topbar from '../components/Topbar/Topbar';
 
 
 function Members() {

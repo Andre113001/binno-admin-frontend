@@ -1,6 +1,6 @@
 import { Fragment, useEffect, useState } from 'react'
 
-import Topbar from './Topbar/Topbar'
+import Topbar from '../../components/Topbar/Topbar'
 import MembersIcon from './MembersIcon'
 import NewsLetterSubscriberIcon from './NewsLetterSubscriberIcon'
 import StartUpIcon from './StartUpIcon'
@@ -15,6 +15,7 @@ import { Button, IconButton } from '@mui/material'
 
 import useHttp from '../../hooks/http-hook'
 import CircularProgress from '@mui/material/CircularProgress'
+import Moment from 'react-moment'
 
 const AdminDashboard = () => {
     const { sendRequest, isLoading } = useHttp()
@@ -50,6 +51,12 @@ const AdminDashboard = () => {
                     import.meta.env.VITE_BACKEND_DOMAIN
                 }/metrics/pending-members`,
             })
+            const res8 = await sendRequest({
+                url: `${
+                    import.meta.env.VITE_BACKEND_DOMAIN
+                }/get/activities`,
+            })
+            
 
             setMetrics({
                 contents: res,
@@ -59,12 +66,12 @@ const AdminDashboard = () => {
                 companies: res5,
                 pendingPosts: res6,
                 pendingMembers: res7,
+                recentActivities: res8.slice(0, 6)
             })
         }
         loadData()
     }, [])
 
-    console.log(metrics)
     return (
         <Fragment>
             <Topbar />
@@ -90,9 +97,9 @@ const AdminDashboard = () => {
                                 </div>
                             </Link>
 
-                            <Link
+                            <div
                                 className={`${styles['overview-col']}`}
-                                to={'/admin/membership_management'}
+                                // to={'/admin/membership_management'}
                             >
                                 <MembersIcon />
 
@@ -106,9 +113,9 @@ const AdminDashboard = () => {
                                     </div>
                                     <p>MEMBERS</p>
                                 </div>
-                            </Link>
+                            </div>
 
-                            <Link className={`${styles['overview-col']}`}>
+                            <div className={`${styles['overview-col']}`}>
                                 <NewsLetterSubscriberIcon />
 
                                 <div className={`${styles['overview-data']}`}>
@@ -121,11 +128,11 @@ const AdminDashboard = () => {
                                     </div>
                                     <p>NEWSLETTER SUBSCRIBER</p>
                                 </div>
-                            </Link>
+                            </div>
 
-                            <Link
+                            <div
                                 className={`${styles['overview-col']}`}
-                                to={'/admin/membership_management'}
+                                // to={'/admin/membership_management'}
                             >
                                 <StartUpIcon />
 
@@ -139,11 +146,11 @@ const AdminDashboard = () => {
                                     </div>
                                     <p>START-UP ENABLERS</p>
                                 </div>
-                            </Link>
+                            </div>
 
-                            <Link
+                            <div
                                 className={`${styles['overview-col']}`}
-                                to={'/admin/membership_management'}
+                                // to={'/admin/membership_management'}
                             >
                                 <StartUpIcon />
 
@@ -157,12 +164,12 @@ const AdminDashboard = () => {
                                     </div>
                                     <p>STARTUP COMPANIES</p>
                                 </div>
-                            </Link>
+                            </div>
                         </div>
                     </div>
 
                     <div className={`${styles['pending-content']}`}>
-                        {/* <Link
+                        {/* <div
                             className={`${styles['pending']}`}
                             to={'/admin/application_processing'}
                         >
@@ -192,11 +199,11 @@ const AdminDashboard = () => {
                                     }}
                                 />
                             </IconButton>
-                        </Link> */}
+                        </div> */}
 
-                        <Link
+                        <div
                             className={`${styles['pending']}`}
-                            to={'/admin/application_processing'}
+                            // to={'/admin/application_processing'}
                         >
                             <div className={`${styles['pending-icon']}`}>
                                 <PendingMembersIcon />
@@ -224,30 +231,33 @@ const AdminDashboard = () => {
                                     }}
                                 />
                             </IconButton>
-                        </Link>
+                        </div>
                     </div>
 
                     <div className={`${styles['activities-row']}`}>
                         <div className={`${styles['title']}`}>
                             <h2>Recent Activities</h2>
-                            <Link className={`${styles['see-all-button']}`}>
+                            <Link className={`${styles['see-all-button']}`} 
+                                to={'/admin/membership_management/members'}
+                            >
                                 See All
                             </Link>
                         </div>
 
                         <div className={`${styles['activities']}`}>
-                            <div className={`${styles['activities-list']}`}>
-                                <p>Andale uploaded a new post.</p>
-                                <p>10:59PM</p>
-                            </div>
-
-                            <div className={`${styles['hr']}`}></div>
-
-                            <div className={`${styles['activities-list']}`}>
-                                <p>Andale uploaded a new post.</p>
-                                <p>10:59PM</p>
-                            </div>
-
+                            {isLoading ? (
+                                <CircularProgress />
+                            ) : (                                
+                                metrics?.recentActivities.map((activtiy) => (
+                                    <>
+                                    <div className={`${styles['activities-list']}`}>
+                                        <p>{activtiy.history_text}</p>
+                                        <p><Moment format='MMM DD, YYYY | hh:mm A'>{activtiy.history_datecreated}</Moment></p>                            
+                                    </div>
+                                    <div className={`${styles['hr']}`}></div>
+                                    </>
+                                ))
+                            )}
                             {/* <div className={`${styles['hr']}`}></div> */}
                         </div>
                     </div>

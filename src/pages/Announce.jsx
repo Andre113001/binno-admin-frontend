@@ -1,5 +1,5 @@
 import React from 'react'
-import Topbar from './Dashboard/Topbar/Topbar'
+import Topbar from '../components/Topbar/Topbar'
 
 // Components 
 // import Topbar from '../components/Topbar/Topbar'

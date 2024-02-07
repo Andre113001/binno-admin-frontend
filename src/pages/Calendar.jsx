@@ -25,7 +25,7 @@ import useCustomModal from '../hooks/useCustomModal'
 import { ScheduleSend, Visibility } from '@mui/icons-material'
 
 import useHttp from '../hooks/http-hook'
-import Topbar from './Dashboard/Topbar/Topbar'
+import Topbar from '../components/Topbar/Topbar'
 
 const Calendar = () => {
     const { sendRequest, isLoading } = useHttp()
