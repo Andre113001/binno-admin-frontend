@@ -7,7 +7,3 @@
     align-items: center;
     /* @apply w-[65%] mx-auto; */
 }
-
-.nav span {
-    color: #F53838;
-}

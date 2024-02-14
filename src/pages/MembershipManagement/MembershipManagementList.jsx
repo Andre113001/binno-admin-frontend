@@ -15,6 +15,7 @@ import { Button } from "@mui/material";
 const MembershipManagementList = (props) => {
     const [openModal, setOpenModal] = useState(false);
     const { onOpenModal } = props;
+    const memberData = props.data;
 
     const modalHandler = () => {
         setOpenModal(true);
@@ -24,16 +25,18 @@ const MembershipManagementList = (props) => {
         setOpenModal(false);
     };
 
+    console.log(memberData);
+
     return (
         <Fragment>
             <td>
-                <p>08-02-2023</p>
+                <p>{memberData.member_id}</p>
             </td>
             <td className={`${managementStyles["institution-col"]}`}>
-                <img src={photo} alt="" />
+                <img src={`http://217.196.51.115/m/api/images?filePath=profile-img/${memberData.setting_profilepic}`} alt="" />
                 <div className={`${managementStyles["institution-data"]}`}>
-                    <div>Name of Institution</div>
-                    <div>address</div>
+                    <div>{memberData.setting_institution}</div>
+                    <div>{memberData.setting_address}</div>
                 </div>
             </td>
             <td className={`${managementStyles["action"]}`}>
@@ -58,7 +61,7 @@ const MembershipManagementList = (props) => {
                             onClick={modalHandler}
                             className={`${managementStyles["timeout-button"]}`}
                         >
-                            Time Out
+                            Restrict
                         </button>
                     </div>
 
@@ -82,7 +85,7 @@ const MembershipManagementList = (props) => {
                     <div className={`${managementStyles["question"]}`}>
                         <h1>Are you sure?</h1>
                         <p>
-                            Do you really want to Time-Out this user for 7 days?
+                            Do you really want to Restrict this user for 7 days?
                         </p>
                     </div>
 
