@@ -40,15 +40,15 @@ function App() {
                     <Route path="/calendar" element={<Calendar />} />
                     <Route path="/announce" element={<Announce />} />
                     <Route
-                        path="/admin/application_processing"
+                        path="/applications"
                         element={<ApplicationProcessing />}
                     />
                     <Route
-                        path="/admin/membership_management"
+                        path="/membership"
                         element={<MembershipManagement />}
                     />
                     <Route
-                        path="/admin/membership_management/members"
+                        path="/activities"
                         element={<ViewActivities />}
                     />
                     <Route path="/dashboard" element={<AdminDashboard />} />
@@ -56,22 +56,6 @@ function App() {
                     <Route
                         path="/admin/activity_monitoring"
                         element={<ActivityMonitoring />}
-                    />
-
-                    <Route
-                        path="/private" // Define a common parent route for private routes
-                        element={
-                            <Outlet>
-                                {/* Private Routes */}
-                                {/* <PrivateRoute path="members" element={<Members />} authenticated={authenticated} />
-                <PrivateRoute path="dashboard" element={<Dashboard />} authenticated={true} />
-                <PrivateRoute path="contents" element={<Contents />} authenticated={authenticated} />
-                <PrivateRoute path="settings" element={<SystemSettings />} authenticated={authenticated} />
-                <PrivateRoute path="announce" element={<Announce />} authenticated={authenticated} />
-                <PrivateRoute path="members/requests" element={<Requests />} authenticated={authenticated} />
-                <PrivateRoute path="calendar" element={<Calendar />} authenticated={authenticated} /> */}
-                            </Outlet>
-                        }
                     />
 
                     {/* Catch */}

@@ -35,7 +35,7 @@ const MembershipManagementList = (props) => {
             <td className={`${managementStyles["institution-col"]}`}>
                 <img src={`http://217.196.51.115/m/api/images?filePath=profile-img/${memberData.setting_profilepic}`} alt="" />
                 <div className={`${managementStyles["institution-data"]}`}>
-                    <div>{memberData.setting_institution}</div>
+                    <div style={{fontWeight: 'bold'}}>{memberData.setting_institution}</div>
                     <div>{memberData.setting_address}</div>
                 </div>
             </td>
@@ -61,7 +61,7 @@ const MembershipManagementList = (props) => {
                             onClick={modalHandler}
                             className={`${managementStyles["timeout-button"]}`}
                         >
-                            Restrict
+                            Suspend
                         </button>
                     </div>
 
@@ -85,7 +85,7 @@ const MembershipManagementList = (props) => {
                     <div className={`${managementStyles["question"]}`}>
                         <h1>Are you sure?</h1>
                         <p>
-                            Do you really want to Restrict this user for 7 days?
+                            Do you really want to Suspend this user for 7 days?
                         </p>
                     </div>
 
