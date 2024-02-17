@@ -1,31 +1,73 @@
-import { Fragment, useState } from "react";
+import { Fragment, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import photo from "../../assets/Screenshot (549).png";
 
 import styles from "../ApplicationProcessing/ApplicationProcessing.module.css";
 import managementStyles from "./MembershipManagement.module.css";
+import {Radio, RadioGroup, FormControlLabel} from '@mui/material'
 
 import RespondIcon from "../ApplicationProcessing/RespondIcon";
 import ActivitiesIcon from "./ActivitiesIcon";
 import TimeOut from "./TimeOutIcon";
 import MembershipManagementModal from "./MembershipManagementModal";
 import { Button } from "@mui/material";
+import { useTimer } from "react-timer-hook";
 
 const MembershipManagementList = (props) => {
     const [openModal, setOpenModal] = useState(false);
+    const [duration, setDuration] = useState('7days'); // Default duration is 7 days`
+    const [seconds, setSeconds] = useState(30); // Initial timer value for permanent suspension
+    const [startTimer, setStartTimer] = useState(false);
+    const [selectedUser, setSelectedUser] = useState();
     const { onOpenModal } = props;
     const memberData = props.data;
 
-    const modalHandler = () => {
+    const modalHandler = (user) => {
         setOpenModal(true);
+        setSelectedUser(user)
+        // startTimer();
+        setStartTimer(true);
     };
 
     const handleClose = () => {
         setOpenModal(false);
+        setStartTimer(false);
+        setSeconds(30)
     };
 
-    console.log(memberData);
+    const handleRadioChange = (event) => {
+        setDuration(event.target.value);
+    };
+
+    useEffect(() => {
+        let intervalId;
+    
+        if (startTimer) {
+          intervalId = setInterval(() => {
+            setSeconds(prevSeconds => {
+              if (prevSeconds === 1) {
+                clearInterval(intervalId);
+                setStartTimer(false);
+                return 0;
+              }
+              return prevSeconds - 1;
+            });
+          }, 1000);
+        }
+    
+        return () => clearInterval(intervalId);
+      }, [startTimer]);
+      
+
+    const handleConfirmRestrict = () => {
+        console.log({
+            user: selectedUser,
+            duration: duration
+        });
+    };
+
+    // console.log(memberData);
 
     return (
         <Fragment>
@@ -41,27 +83,15 @@ const MembershipManagementList = (props) => {
             </td>
             <td className={`${managementStyles["action"]}`}>
                 <div className={`${managementStyles["action-button"]}`}>
-                    <div className={`${managementStyles["document"]}`}>
-                        <div onClick={() => documentHandler(1)}>
-                            <ActivitiesIcon />
-                        </div>
-                        <button
-                            onClick={() => documentHandler(1)}
-                            className={`${managementStyles["document-button"]}`}
-                        >
-                            View activities
-                        </button>
-                    </div>
-                    <div className={`${managementStyles["schedule"]}`}>
+                    <div className={`${managementStyles["schedule"]}`} onClick={() => modalHandler(memberData)}>
                         {/* <ScheduleIcon /> */}
-                        <div onClick={modalHandler}>
+                        <div >
                             <TimeOut />
                         </div>
                         <button
-                            onClick={modalHandler}
                             className={`${managementStyles["timeout-button"]}`}
                         >
-                            Suspend
+                            Restrict
                         </button>
                     </div>
 
@@ -69,6 +99,7 @@ const MembershipManagementList = (props) => {
 
                     <div className={`${managementStyles["schedule"]}`}>
                         <Link
+                            to={`/membership/${memberData.setting_memberId}`}
                             className={`${managementStyles["member-button"]}`}
                         >
                             View Member
@@ -77,26 +108,62 @@ const MembershipManagementList = (props) => {
                 </div>
             </td>
 
-            <MembershipManagementModal
-                open={openModal}
-                handleClose={handleClose}
-            >
+            <MembershipManagementModal open={openModal} handleClose={handleClose}>
                 <div className={`${managementStyles["modal-main"]}`}>
                     <div className={`${managementStyles["question"]}`}>
                         <h1>Are you sure?</h1>
                         <p>
-                            Do you really want to Suspend this user for 7 days?
+                            Do you really want to suspend {selectedUser?.setting_institution}?
                         </p>
                     </div>
 
+                    <RadioGroup value={duration} onChange={handleRadioChange}>
+                        <FormControlLabel value="7days" control={<Radio />} label="7 days" />
+                        <FormControlLabel
+                            value="1month"
+                            control={<Radio />}
+                            label="1 month"
+                        />
+                        <FormControlLabel
+                            value="permanent"
+                            control={<Radio />}
+                            label={startTimer ? (`Permanent (${seconds}s)`) : ('Permanent')}
+                            disabled={startTimer}
+                        />
+                    </RadioGroup>
+
                     <div className={`${managementStyles['modal-button']}`}>
-                        <Button sx={{height: '50px', background: '#FF7A00', border: '1px solid #FF7A00', width: '140px', borderRadius: '10px', '&:hover': {
-                            background: '#FF7A00'
-                        }, color: '#fff', fontSize: '18px', fontWeight: '500'}}>
-                            Yes
+                        <Button 
+                            sx={{
+                                height: '50px', 
+                                background: '#FF7A00', 
+                                border: '1px solid #FF7A00', 
+                                width: '140px', 
+                                borderRadius: '10px', 
+                                '&:hover': {
+                                    background: '#FF7A00'
+                                }, 
+                                color: '#fff', 
+                                fontSize: '18px', 
+                                fontWeight: '500'
+                            }}
+                            onClick={handleConfirmRestrict}
+                        >
+                            Confirm
                         </Button>
-                        <Button sx={{height: '50px', border: '1px solid #000', width: '140px', borderRadius: '10px', fontSize: '18px', fontWeight: '500', color: '#000'}}>
-                            No
+                        <Button 
+                            sx={{
+                                height: '50px', 
+                                border: '1px solid #000', 
+                                width: '140px', 
+                                borderRadius: '10px', 
+                                fontSize: '18px', 
+                                fontWeight: '500', 
+                                color: '#000'
+                            }}
+                            onClick={handleClose}
+                        >
+                            Discard
                         </Button>
                     </div>
                 </div>

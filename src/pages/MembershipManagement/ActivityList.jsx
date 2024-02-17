@@ -4,7 +4,7 @@ import Moment from "react-moment";
 
 const ActivitiesList = (props) => {
     const item = props.item;
-    console.log(item);
+    // console.log(item);
     return (
         <Fragment>
             <td>{item.history_id}</td>

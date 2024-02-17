@@ -25,6 +25,7 @@ import ViewActivities from './pages/MembershipManagement/ViewActivities'
 import AdminDashboard from './pages/Dashboard/Dashboard'
 import Notification from './pages/Notification/Notification'
 import ActivityMonitoring from "./pages/ActivityMonitoring/ActivityMonitoring";
+import MemberView from './pages/MembershipManagement/MemberView'
 
 function App() {
     const [authenticated, setAuthenticated] = useState(false) // You can set this based on the user's authentication status
@@ -46,6 +47,10 @@ function App() {
                     <Route
                         path="/membership"
                         element={<MembershipManagement />}
+                    />
+                    <Route
+                        path="/membership/:member_id"
+                        element={<MemberView />}
                     />
                     <Route
                         path="/activities"
