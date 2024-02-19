@@ -8,6 +8,15 @@
     font-weight: 700;
 }
 
+.app-email {
+    color: #2181c1;
+}
+
+.app-email:hover {
+    text-decoration: underline;
+    color: #ff7a00;
+}
+
 .filters {
     margin-top: 41px;
     width: 100%;
@@ -75,18 +84,24 @@
 .schedule {
     display: flex;
     gap: 11px;
-}
-
-.action-button button {
-    text-decoration: underline;
+    /* background-color: #fb7901; */
+    color: white;
 }
 
 .action-button .document-button {
     color: #fb7901;
 }
 
-.action-button .schedule-button {
-    color: #5451d9;
+.schedule-button {
+    display: flex;
+    justify-content: center;
+}
+
+.schedule-button button {
+    padding: 10px 50px;
+    border-radius: 10px;
+    background-color: #2e94c8;
+    color: #ffff;
 }
 
 .date-and-number {
@@ -133,6 +148,8 @@
     flex-direction: column;
     justify-content: center;
 }
+
+
 
 .enabler-document {
     margin-top: 21px;

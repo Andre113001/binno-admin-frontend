@@ -14,7 +14,8 @@
 
 .management-request {
     height: 38px;
-    width: 132px;
+    width: auto;
+    padding: 10px;
     
     border-radius: 10px;
     border: 1.5px solid #FF7A00;
@@ -38,19 +39,27 @@
 .circle {
     position: absolute;
     top: -10px;
-    right: 17px;
+    right: -10px;
 
-    height: 18px;
-    width: 18px;
+    height: 20px; /* Adjust height */
+    min-width: 20px; /* Ensure the circle maintains its shape */
+    padding: 2px; /* Added padding for better appearance */
     background: #f00;
     border-radius: 50%;
     border: 2px solid #fff;
+    color: #fff;
+    font-size: 12px; /* Adjust font size */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
+
 
 .institution-col {
     display: flex;
-    justify-content: center;
-    gap: 18px;
+    justify-content: left;
+    gap: 20px;
+    margin-left: 40px;
 }
 
 .institution-col p {
@@ -61,6 +70,10 @@
     height: 42px;
     width: 44px;
     object-fit: fill;
+    -webkit-box-shadow: 0px 6px 22px -8px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 6px 22px -8px rgba(0,0,0,0.75);
+    box-shadow: 0px 6px 22px -8px rgba(0,0,0,0.75);
+    border-radius: 10px;
 }
 
 .institution-data {

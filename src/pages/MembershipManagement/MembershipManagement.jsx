@@ -1,5 +1,5 @@
 import { Fragment, useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import InputAdornment from "@mui/material/InputAdornment";
 
 
@@ -18,12 +18,25 @@ import useHttp from "../../hooks/http-hook";
 const MembershipManagement = () => {
     const [ members, setMembers ] = useState();
     const { sendRequest, isLoading} = useHttp();
+    const [selectedOption, setSelectedOption] = useState(1); // Initial selected option
+    const [ appCount, setAppCount ] = useState();
+    const navigate = useNavigate();
+
+    const handleSelect = (value) => {
+        setSelectedOption(value);
+    };
 
     useEffect(() => {
         const loadData = async () => {
             const result = await sendRequest({
                 url: `${import.meta.env.VITE_BACKEND_DOMAIN}/get/users`,
             });
+
+            const fetchApp = await sendRequest({
+                url: `${import.meta.env.VITE_BACKEND_DOMAIN}/application`
+            })
+            
+            setAppCount(fetchApp.length);
             setMembers(result);
         }
 
@@ -34,8 +47,8 @@ const MembershipManagement = () => {
         <Fragment>
             <Topbar />
             <div className="container">
-                <div>
-                    <Back link="/dashboard" />
+                <div onClick={() => navigate(-1)}>
+                    <Back />
                 </div>
 
                 <div className={`${styles['management-title']}`}>
@@ -43,15 +56,24 @@ const MembershipManagement = () => {
                         <h1>Members</h1>
                     </div>
 
-                    <Link className={`${styles['management-request']}`}>
-                        <p>Request for application</p>
-                        {/* <div className={`${styles['circle']}`} /> */}
+                    <Link to={'/applications'} className={`${styles['management-request']}`}>
+                        <p>Request for Application</p>
+                        <div className={`${styles['circle']}`} >
+                            {appCount}
+                        </div>
                     </Link>
                 </div>
 
                 <div className={`${processingStyle["filters"]}`}>
                     <div className={`${processingStyle["section_1"]}`}>
-                        <Dropdown />
+                    <Dropdown
+                        selected={selectedOption}
+                        onSelect={handleSelect}
+                        options={[
+                            { value: 1, label: 'Enabler' },
+                            { value: 2, label: 'Company' },
+                        ]}
+                    />
                     </div>
 
                     <div>

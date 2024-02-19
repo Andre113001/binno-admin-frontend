@@ -6,14 +6,14 @@ import styles from "./ActivityMonitoring";
 const ActivityMonitoringList = () => {
     return (
         <Fragment>
-            <td>
+            {/* <td>
                 <p>08-02-2023</p>
             </td>
             <td className={`${styles["activity-col"]}`}>
                 <div className={`${styles["activitymanagement-request-data"]}`}>
                     <div>Name of Author</div>
                 </div>
-            </td>
+            </td> */}
             <td className={`${styles["action"]}`}>
                 <div className={`${styles["action-button"]}`}>
 

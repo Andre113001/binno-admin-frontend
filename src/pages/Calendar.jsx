@@ -4,7 +4,7 @@ import 'moment-timezone'
 import moment from 'moment'
 import axios from 'axios'
 import dayjs from 'dayjs'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
 // Components
 // import Topbar from '../components/Topbar/Topbar'
@@ -31,11 +31,14 @@ const Calendar = () => {
     const { sendRequest, isLoading } = useHttp()
     const { handleOpen, handleClose, CustomModal } = useCustomModal()
     const [modalData, setModalData] = useState([])
-    const [selectedDate, setSelectedDate] = useState('')
     const [appointments, setAppointments] = useState(null)
     const [timeStart, setTimeStart] = useState('')
     const [timeEnd, setTimeEnd] = useState('')
-    const [newSchedDate, setNewSchedDate] = useState('')
+    const [newSchedDate, setNewSchedDate] = useState('');
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const defaultDate = queryParams.get('date') || moment().format('YYYY-MM-DD'); // Get date from query parameter or use current date
+    const [selectedDate, setSelectedDate] = useState(defaultDate);
 
     const fetchDate = async (date) => {
         try {
@@ -50,14 +53,14 @@ const Calendar = () => {
         }
     }
 
-    useEffect(() => {
-        const fetchInitialDate = async () => {
-            const date = await moment().format('YYYY-MM-DD')
-            setSelectedDate(date)
-        }
+    // useEffect(() => {
+    //     const fetchInitialDate = async () => {
+    //         const date = moment().format('YYYY-MM-DD')
+    //         setSelectedDate(date)
+    //     }
 
-        fetchInitialDate()
-    }, [])
+    //     fetchInitialDate()
+    // }, [])
 
     // Function to handle date selection
     const handleDateChange = async (newDate) => {
@@ -277,7 +280,7 @@ const Calendar = () => {
                                                     </h1>
                                                 </div>
                                                 <div className="ml-auto">
-                                                    <Link to={'#'}>
+                                                    <Link to={`/applications?appId=${appointment.sched_appid}`}>
                                                         <button className="btn bg-blue-400 flex items-center justify-center space-x-2">
                                                             <Visibility />
                                                             <span>

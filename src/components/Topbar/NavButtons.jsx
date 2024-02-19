@@ -25,12 +25,12 @@ const NavButtons = () => {
         {
             icon: <Person style={{ fontSize: '24px' }}/>,
             name: 'Members',
-            redirect: '/admin/membership_management'
+            redirect: '/membership'
         },
         {
             icon: <AccessTime style={{ fontSize: '24px' }}/>,
             name: 'Activities',
-            redirect: '/admin/membership_management/members'
+            redirect: '/activities'
         },
         // {
         //     icon: (

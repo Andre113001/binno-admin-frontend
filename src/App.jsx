@@ -25,6 +25,7 @@ import ViewActivities from './pages/MembershipManagement/ViewActivities'
 import AdminDashboard from './pages/Dashboard/Dashboard'
 import Notification from './pages/Notification/Notification'
 import ActivityMonitoring from "./pages/ActivityMonitoring/ActivityMonitoring";
+import MemberView from './pages/MembershipManagement/MemberView'
 
 function App() {
     const [authenticated, setAuthenticated] = useState(false) // You can set this based on the user's authentication status
@@ -40,15 +41,19 @@ function App() {
                     <Route path="/calendar" element={<Calendar />} />
                     <Route path="/announce" element={<Announce />} />
                     <Route
-                        path="/admin/application_processing"
+                        path="/applications"
                         element={<ApplicationProcessing />}
                     />
                     <Route
-                        path="/admin/membership_management"
+                        path="/membership"
                         element={<MembershipManagement />}
                     />
                     <Route
-                        path="/admin/membership_management/members"
+                        path="/membership/:member_id"
+                        element={<MemberView />}
+                    />
+                    <Route
+                        path="/activities"
                         element={<ViewActivities />}
                     />
                     <Route path="/dashboard" element={<AdminDashboard />} />
@@ -56,22 +61,6 @@ function App() {
                     <Route
                         path="/admin/activity_monitoring"
                         element={<ActivityMonitoring />}
-                    />
-
-                    <Route
-                        path="/private" // Define a common parent route for private routes
-                        element={
-                            <Outlet>
-                                {/* Private Routes */}
-                                {/* <PrivateRoute path="members" element={<Members />} authenticated={authenticated} />
-                <PrivateRoute path="dashboard" element={<Dashboard />} authenticated={true} />
-                <PrivateRoute path="contents" element={<Contents />} authenticated={authenticated} />
-                <PrivateRoute path="settings" element={<SystemSettings />} authenticated={authenticated} />
-                <PrivateRoute path="announce" element={<Announce />} authenticated={authenticated} />
-                <PrivateRoute path="members/requests" element={<Requests />} authenticated={authenticated} />
-                <PrivateRoute path="calendar" element={<Calendar />} authenticated={authenticated} /> */}
-                            </Outlet>
-                        }
                     />
 
                     {/* Catch */}

@@ -201,9 +201,9 @@ const AdminDashboard = () => {
                             </IconButton>
                         </div> */}
 
-                        <div
+                        <Link
                             className={`${styles['pending']}`}
-                            // to={'/admin/application_processing'}
+                            to={'/applications'}
                         >
                             <div className={`${styles['pending-icon']}`}>
                                 <PendingMembersIcon />
@@ -231,7 +231,7 @@ const AdminDashboard = () => {
                                     }}
                                 />
                             </IconButton>
-                        </div>
+                        </Link>
                     </div>
 
                     <div className={`${styles['activities-row']}`}>
