@@ -43,9 +43,23 @@ const EnablerImage = ({ id }) => {
             const res = await fetch(
                 `${
                     import.meta.env.VITE_BACKEND_DOMAIN
-                }/application/upload/${appId}/${file}`
+                }/application/upload/${appId}/${file}`,
+                {
+                    headers: {"Content-Type": 'application/pdf'}
+                }
             )
-            const blob = await res.blob()
+
+            const updatedHeaders = new Headers(res.headers);
+            updatedHeaders.set('Content-Disposition', 'inline');
+
+            // Create a new response with updated headers
+            const modifiedResponse = new Response(res.body, {
+                status: res.status,
+                statusText: res.statusText,
+                headers: updatedHeaders
+            });
+
+            const blob = await modifiedResponse.blob()
             const pdfObjectUrl = URL.createObjectURL(blob)
 
             const fileType = checkFileType(file)
@@ -68,9 +82,11 @@ const EnablerImage = ({ id }) => {
 
             const data = await res.json()
 
-            data.files.map((d) => {
-                loadPDF(id, d)
+            const promises = data.files.map(async (d) => {
+                await loadPDF(id, d)
             })
+
+            await Promise.all(promises)
 
             console.log(data)
         }
