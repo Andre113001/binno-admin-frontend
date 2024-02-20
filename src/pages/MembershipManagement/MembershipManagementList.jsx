@@ -76,7 +76,7 @@ const MembershipManagementList = (props) => {
       <td>
         <div className={`${managementStyles["institution-status"]}`}>
           <div className={`${managementStyles["restricted-status"]}`}></div>
-          {/* <p>{memberData.status}</p> */}
+          <p>{memberData.status}</p>
           <p>Status</p>
         </div>
       </td>
