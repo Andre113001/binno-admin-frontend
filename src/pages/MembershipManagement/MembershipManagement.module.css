@@ -54,25 +54,25 @@
 }
 
 .active-status{
-    min-width: 20px;
-    min-height: 20px;
-    max-height: 20px; 
+    min-width: 15px;
+    min-height: 15px;
+    max-height: 15px; 
     background: green;
     border-radius: 50%;
 }
 
 .restricted-status{
-    min-width: 20px;
-    min-height: 20px;
-    max-height: 20px; 
+    min-width: 15px;
+    min-height: 15px;
+    max-height: 15px; 
     background: rgb(255, 174, 0);
     border-radius: 50%;
 }
 
 .removed-status{
-    min-width: 20px;
-    min-height: 20px;
-    max-height: 20px;
+    min-width: 15px;
+    min-height: 15px;
+    max-height: 15px;
     background: red;
     border-radius: 50%;
 }
