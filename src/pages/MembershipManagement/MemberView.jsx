@@ -48,6 +48,7 @@ const MemberView = () => {
     const [memberType, setMemberType] = useState();
     const [contents, setContents] = useState();
     const [expandedIndex, setExpandedIndex] = useState(null);
+    const [link, setLink] = useState('');
 
 
     const [activities, setActivities] = useState([]);
@@ -74,18 +75,24 @@ const MemberView = () => {
         switch (selection[newValue]) {
             case 'Events':
                 res = await fetchContent(`${import.meta.env.VITE_BACKEND_DOMAIN_MEMBERS}/events/user/${member_id.member_id}`);
+                setLink('https://binnostartup.site/events-view.php?event_id=');
                 break;
             case 'Blogs':
                 res = await fetchContent(`${import.meta.env.VITE_BACKEND_DOMAIN_MEMBERS}/blogs/user/${member_id.member_id}`);
+                setLink('https://binnostartup.site/blogs-view.php?blog_id=');
                 break;
             case 'Guides':
                 res = await fetchContent(`${import.meta.env.VITE_BACKEND_DOMAIN_MEMBERS}/programs/user/${member_id.member_id}`);
+                setLink('https://binnostartup.site/guides-view.php?program_id=');
                 break;            
             case 'Posts':
                 res = await fetchContent(`${import.meta.env.VITE_BACKEND_DOMAIN_MEMBERS}/posts/user/${member_id.member_id}`);
+                setLink('https://binnostartup.site/posts-view.php?post_id=');
                 break;
             default:
+                res = null;
                 console.log("Error");
+                break;
         }
 
         setContents(res);
@@ -96,6 +103,8 @@ const MemberView = () => {
             const result = await sendRequest({
                 url: `${import.meta.env.VITE_BACKEND_DOMAIN_MEMBERS}/members/member/${member_id.member_id}`,
             });
+
+            console.log(result[0]);
     
             setMemberDetails(result[0]);
             
@@ -179,7 +188,7 @@ const MemberView = () => {
                     <div className="absolute inset-0 bg-cover bg-center rounded-lg shadow-lg" style={{backgroundImage: `url("${import.meta.env.VITE_BACKEND_DOMAIN_MEMBERS}/images?filePath=profile-cover-img/${memberDetails.setting_coverpic}")` || null}}>
                         {/* Profile photo */}
                         <div className="absolute bottom-[-65px] right-20 transform -translate-x-1/2 mb-[-20px] z-10">
-                            <img src={`${import.meta.env.VITE_BACKEND_DOMAIN_MEMBERS}/images?filePath=profile-img/${memberDetails.setting_profilepic}` || null} className="w-[170px] h-[170px] rounded-full border-4 bg-gray-200" />
+                            <img src={`${import.meta.env.VITE_BACKEND_DOMAIN_MEMBERS}/images?filePath=profile-img/${memberDetails.setting_profilepic}` || null} className="w-[170px] h-[170px] object-cover rounded-full border-4 bg-gray-200" />
                         </div>
                     </div>
 
@@ -215,7 +224,7 @@ const MemberView = () => {
                 <Button
                         // variant="contained"
                         startIcon={<Email />}
-                        onClick={() => window.open(`mailto:${memberDetails?.email_address}`)}
+                        onClick={() => window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=${memberDetails?.email_address}`)}
                     >
                         Send an Email to {memberDetails?.setting_institution}
                     </Button>
@@ -272,57 +281,25 @@ const MemberView = () => {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                        {contents?.slice((contentPage - 1) * 4, contentPage * 4).map((content, index) => (
-                            <>
-                                <TableRow key={index} onClick={() => handleToggle(index)} style={{ cursor: 'pointer' }}>
-                                    <TableCell>{content.event_id || content.blog_id || content.program_id || content.post_id}</TableCell>
-                                    <TableCell>{content.event_title || content.blog_title || content.program_heading || content.post_heading}</TableCell>
-                                    <TableCell>
-                                        <Moment format="MMMM DD, YYYY">
-                                            {content.event_datecreated || content.blog_dateadded || content.program_dateadded || content.post_dateadded}
-                                        </Moment>
-                                    </TableCell>
-                                </TableRow>
-                                {index === expandedIndex && (
-                                    <TableRow>
-                                        <TableCell colSpan={4}> {/* Span the Accordion across all columns */}
-                                            {index === expandedIndex && (
-                                                <Accordion
-                                                    fullWidth
-                                                    expanded={index === expandedIndex}
-                                                    onChange={() => handleToggle(index)}
-                                                    sx={{
-                                                        boxShadow: 'none', // Remove the box shadow
-                                                        border: 'none', // Remove the border
-                                                        backgroundColor: 'transparent', // Make the background transparent
-                                                        '& .MuiAccordionSummary-root': {
-                                                            borderBottom: 'none', // Remove the bottom border of the summary
-                                                        },
-                                                        '& .MuiAccordionSummary-content': {
-                                                            margin: 0, // Remove margin to make it align with the table rows
-                                                        },
-                                                        '& .toggleButton': {
-                                                            display: 'none', // Hide the toggle button inside the Accordion
-                                                        },
-                                                    }}
-                                                >
-                                                    <AccordionDetails>
-                                                        {/* Content details here */}
-                                                        <Typography variant="h4">
-                                                            {content.event_title || content.blog_title || content.program_heading || content.post_heading}
-                                                        </Typography>
-                                                        <Typography mt={2}>
-                                                            {content.event_description || content.blog_content || content.post_bodytext}
-                                                        </Typography>
-                                                    </AccordionDetails>
-                                                </Accordion>
-                                            )}
+                            {contents?.slice((contentPage - 1) * 4, contentPage * 4).map((content, index) => (
+                                <Fragment key={index} >
+                                    <TableRow >
+                                        <TableCell>{content.event_id || content.blog_id || content.program_id || content.post_id}</TableCell>
+                                        <TableCell>{content.event_title || content.blog_title || content.program_heading || content.post_heading}</TableCell>
+                                        <TableCell>
+                                            <Moment format="MMMM DD, YYYY">
+                                                {content.event_datecreated || content.blog_dateadded || content.program_dateadded || content.post_dateadded}
+                                            </Moment>
+                                        </TableCell>
+                                        <TableCell>
+                                            <Button onClick={() => {window.open(`${link}${content.event_id || content.blog_id || content.program_id || content.post_id}`)}}>
+                                                View
+                                            </Button>
                                         </TableCell>
                                     </TableRow>
-                                )}
-                            </>
-                        ))}
-                    </TableBody>
+                                </Fragment>
+                            ))}
+                        </TableBody>
                     </Table>
                 </div>
 

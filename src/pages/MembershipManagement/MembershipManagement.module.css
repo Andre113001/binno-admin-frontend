@@ -139,6 +139,18 @@
     color: #F53838;
 }
 
+.action-button .recover-button {
+    color: #41a664;
+}
+
+.uplift {
+    color: rgb(233, 168, 28);;
+}
+
+.recover {
+    color: #41a664;
+}
+
 .border {
     height: 43px;
     border: 1px solid #898989;

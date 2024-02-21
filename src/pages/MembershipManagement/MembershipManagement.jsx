@@ -1,12 +1,9 @@
 import { Fragment, useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import InputAdornment from "@mui/material/InputAdornment";
-
 import styles from "./MembershipManagement.module.css";
 import processingStyle from "../ApplicationProcessing/ApplicationProcessing.module.css";
 import SearchIcon from "@mui/icons-material/Search";
-
-// import Topbar from "../../components/Topbar/Topbar";
 import Back from "../../components/Back/Back";
 import Dropdown from "../../components/Dropdowmn/Dropdown";
 import { TextField } from "@mui/material";
@@ -15,14 +12,20 @@ import Topbar from "../../components/Topbar/Topbar";
 import useHttp from "../../hooks/http-hook";
 
 const MembershipManagement = () => {
-  const [members, setMembers] = useState();
+  const [members, setMembers] = useState([]);
+  const [filteredMembers, setFilteredMembers] = useState([]);
   const { sendRequest, isLoading } = useHttp();
-  const [selectedOption, setSelectedOption] = useState(1); // Initial selected option
-  const [appCount, setAppCount] = useState();
+  const [selectedOption, setSelectedOption] = useState(0); // Initial selected option
+  const [appCount, setAppCount] = useState(0);
   const navigate = useNavigate();
+  const [searchInput, setSearchInput] = useState("");
 
   const handleSelect = (value) => {
     setSelectedOption(value);
+  };
+
+  const handleSearch = (event) => {
+    setSearchInput(event.target.value);
   };
 
   useEffect(() => {
@@ -37,10 +40,31 @@ const MembershipManagement = () => {
 
       setAppCount(fetchApp.length);
       setMembers(result);
+      filterMembers(result, selectedOption, searchInput);
     };
 
     loadData();
-  }, [sendRequest]);
+  }, [sendRequest, selectedOption, searchInput]);
+
+  const filterMembers = (members, option, searchInput) => {
+    let filtered = members;
+
+    // Filter based on dropdown option
+    if (option === 1) {
+      filtered = members.filter((member) => member.member_type === 1);
+    } else if (option === 2) {
+      filtered = members.filter((member) => member.member_type === 2);
+    }
+
+    // Filter based on search input if it's not empty
+    if (searchInput.trim() !== "") {
+      filtered = filtered.filter((member) =>
+        member.name.toLowerCase().includes(searchInput.toLowerCase())
+      );
+    }
+
+    setFilteredMembers(filtered);
+  };
 
   return (
     <Fragment>
@@ -70,16 +94,19 @@ const MembershipManagement = () => {
               selected={selectedOption}
               onSelect={handleSelect}
               options={[
-                { value: 1, label: "Enabler" },
-                { value: 2, label: "Company" },
+                { value: 0, label: "All" },
+                { value: 1, label: "Company" },
+                { value: 2, label: "Enabler" },
               ]}
             />
           </div>
 
           <div>
-            <div>
+            {/* <div>
               <TextField
                 placeholder="Search"
+                value={searchInput}
+                onChange={handleSearch}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
@@ -98,7 +125,7 @@ const MembershipManagement = () => {
                   },
                 }}
               />
-            </div>
+            </div> */}
           </div>
         </div>
 
@@ -113,7 +140,7 @@ const MembershipManagement = () => {
               </tr>
             </thead>
             <tbody className={`${processingStyle["table-body"]}`}>
-              {members?.map((member) => (
+              {filteredMembers.map((member) => (
                 <tr
                   className={`${processingStyle["table-row"]}`}
                   key={member.member_id}
