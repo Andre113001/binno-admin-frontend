@@ -53,6 +53,12 @@
     justify-content: center;
 }
 
+.member-status{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .active-status{
     min-width: 15px;
     min-height: 15px;
