@@ -238,7 +238,7 @@ const AdminDashboard = () => {
                         <div className={`${styles['title']}`}>
                             <h2>Recent Activities</h2>
                             <Link className={`${styles['see-all-button']}`} 
-                                to={'/admin/membership_management/members'}
+                                to={'/activities'}
                             >
                                 See All
                             </Link>
