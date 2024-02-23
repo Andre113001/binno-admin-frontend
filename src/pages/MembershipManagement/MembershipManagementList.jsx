@@ -144,11 +144,22 @@ const MembershipManagementList = (props) => {
         <p>{memberData.member_id}</p>
       </td>
       <td>
-        <div className={`${managementStyles["institution-status"]}`}>
-          <div className={`${managementStyles["restricted-status"]}`}></div>
-          <p>{memberData.status}</p>
-          <p>Status</p>
-        </div>
+      {memberData.member_restrict !== null ? (
+            <>
+                <div className={`${managementStyles["restricted-status"]}`}></div>
+                <p>Restricted</p>
+            </>
+        ) : memberData.member_flag !== 1 ? (
+            <>
+                <div className={`${managementStyles["removed-status"]}`}></div>
+                <p>Removed</p>
+            </>
+        ) : (
+            <>
+                <div className={`${managementStyles["active-status"]}`}></div>
+                <p>Active</p>
+            </>
+        )}
       </td>
       <td className={`${managementStyles["institution-col"]}`}>
         <img
