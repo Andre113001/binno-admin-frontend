@@ -10,8 +10,8 @@ import { Radio, RadioGroup, FormControlLabel } from "@mui/material";
 import RespondIcon from "../ApplicationProcessing/RespondIcon";
 import ActivitiesIcon from "./ActivitiesIcon";
 import TimeOut from "./TimeOutIcon";
-import LockOpenIcon from '@mui/icons-material/LockOpen';
-import RestartAltIcon from '@mui/icons-material/RestartAlt';
+import LockOpenIcon from "@mui/icons-material/LockOpen";
+import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import MembershipManagementModal from "./MembershipManagementModal";
 import { Button } from "@mui/material";
 import useHttp from "../../hooks/http-hook";
@@ -41,30 +41,30 @@ const MembershipManagementList = (props) => {
   const upliftModalHandler = (user) => {
     setUpliftModal(true);
     setSelectedUser(user);
-  }
+  };
 
   const recoveryModalHandler = (user) => {
     setRecoveryModal(true);
     setStartTimer(true);
     setSelectedUser(user);
-  }
+  };
 
   const handleClose = () => {
     setOpenModal(false);
     setStartTimer(false);
     setSeconds(30);
-    setDuration("7days")
+    setDuration("7days");
   };
 
   const handleCloseUplift = () => {
     setUpliftModal(false);
-  }
+  };
 
   const handleCloseRecovery = () => {
     setRecoveryModal(false);
     setStartTimer(false);
     setSeconds(30);
-  }
+  };
 
   const handleRadioChange = (event) => {
     setDuration(event.target.value);
@@ -92,52 +92,51 @@ const MembershipManagementList = (props) => {
   const handleConfirmRestrict = async () => {
     const res = await sendRequest({
       url: `${import.meta.env.VITE_BACKEND_DOMAIN}/members/restrict`,
-      method: 'POST',
+      method: "POST",
       body: JSON.stringify({
         valid: duration,
         memberId: selectedUser.member_id,
         memberName: selectedUser.setting_institution,
-        email: selectedUser.email_address
-      })
-    })  
+        email: selectedUser.email_address,
+      }),
+    });
 
     console.log(res);
     handleClose();
     window.location.reload();
-
   };
 
   const handleUpliftRestrict = async () => {
     const res = await sendRequest({
       url: `${import.meta.env.VITE_BACKEND_DOMAIN}/members/lift_restrict`,
-      method: 'POST',
+      method: "POST",
       body: JSON.stringify({
         memberId: selectedUser.member_id,
         memberName: selectedUser.setting_institution,
-        email: selectedUser.email_address
-      })   
-    })  
+        email: selectedUser.email_address,
+      }),
+    });
 
     console.log(res);
     handleCloseUplift();
     window.location.reload();
-  }
+  };
 
   const handleRecoverAccount = async () => {
     const res = await sendRequest({
       url: `${import.meta.env.VITE_BACKEND_DOMAIN}/members/recover`,
-      method: 'POST',
+      method: "POST",
       body: JSON.stringify({
         memberId: selectedUser.member_id,
         memberName: selectedUser.setting_institution,
-        email: selectedUser.email_address
-      })   
-    })  
+        email: selectedUser.email_address,
+      }),
+    });
 
     console.log(res);
     handleCloseRecovery();
     window.location.reload();
-  }
+  };
 
   return (
     <Fragment>
@@ -146,22 +145,9 @@ const MembershipManagementList = (props) => {
       </td>
       <td>
         <div className={`${managementStyles["institution-status"]}`}>
-        {memberData.member_restrict !== null ? (
-            <>
-                <div className={`${managementStyles["restricted-status"]}`}></div>
-                <p>Restricted</p>
-            </>
-        ) : memberData.member_flag !== 1 ? (
-            <>
-                <div className={`${managementStyles["removed-status"]}`}></div>
-                <p>Removed</p>
-            </>
-        ) : (
-            <>
-                <div className={`${managementStyles["active-status"]}`}></div>
-                <p>Active</p>
-            </>
-        )}
+          <div className={`${managementStyles["restricted-status"]}`}></div>
+          <p>{memberData.status}</p>
+          <p>Status</p>
         </div>
       </td>
       <td className={`${managementStyles["institution-col"]}`}>
@@ -179,14 +165,14 @@ const MembershipManagementList = (props) => {
       <td className={`${managementStyles["action"]}`}>
         <div className={`${managementStyles["action-button"]}`}>
           {memberData.member_restrict !== null ? (
-            <div 
+            <div
               className={`${managementStyles["uplift"]}`}
               onClick={() => upliftModalHandler(memberData)}
             >
               <div>
-                < LockOpenIcon />
+                <LockOpenIcon />
               </div>
-              <button className={`${managementStyles["uplift-btn"]}`}> 
+              <button className={`${managementStyles["uplift-btn"]}`}>
                 Uplift Suspension
               </button>
             </div>
@@ -202,7 +188,7 @@ const MembershipManagementList = (props) => {
               <button className={`${managementStyles["timeout-button"]}`}>
                 Restrict
               </button>
-          </div>
+            </div>
           ) : (
             <div
               className={`${managementStyles["recover"]}`}
@@ -215,7 +201,7 @@ const MembershipManagementList = (props) => {
               <button className={`${managementStyles["recover-button"]}`}>
                 Recover
               </button>
-          </div>
+            </div>
           )}
 
           <div className={`${managementStyles["border"]}`}></div>
@@ -297,13 +283,17 @@ const MembershipManagementList = (props) => {
           </div>
         </div>
       </MembershipManagementModal>
-      
-      <MembershipManagementModal open={openUpliftModal} handleClose={handleCloseUplift}>
-      <div className={`${managementStyles["modal-main"]}`}>
+
+      <MembershipManagementModal
+        open={openUpliftModal}
+        handleClose={handleCloseUplift}
+      >
+        <div className={`${managementStyles["modal-main"]}`}>
           <div className={`${managementStyles["question"]}`}>
             <h1>Are you sure?</h1>
             <p>
-              Do you really want to uplift {selectedUser?.setting_institution}'s suspension?
+              Do you really want to uplift {selectedUser?.setting_institution}'s
+              suspension?
             </p>
           </div>
 
@@ -346,12 +336,16 @@ const MembershipManagementList = (props) => {
         </div>
       </MembershipManagementModal>
 
-      <MembershipManagementModal open={openRecoveryModal} handleClose={handleCloseRecovery}>
-      <div className={`${managementStyles["modal-main"]}`}>
+      <MembershipManagementModal
+        open={openRecoveryModal}
+        handleClose={handleCloseRecovery}
+      >
+        <div className={`${managementStyles["modal-main"]}`}>
           <div className={`${managementStyles["question"]}`}>
             <h1>Are you sure?</h1>
             <p>
-              Do you really want to recover {selectedUser?.setting_institution}'s account?
+              Do you really want to recover {selectedUser?.setting_institution}
+              's account?
             </p>
           </div>
 
@@ -393,7 +387,6 @@ const MembershipManagementList = (props) => {
           </div>
         </div>
       </MembershipManagementModal>
-      
     </Fragment>
   );
 };

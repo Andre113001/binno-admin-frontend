@@ -223,6 +223,10 @@
     gap: 30px;
 }
 
+.error-textfield{
+    border-color: red;
+}
+
 .schedule-row input {
     text-indent: 18px;
     flex: 1;

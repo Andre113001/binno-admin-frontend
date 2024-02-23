@@ -3,6 +3,8 @@ import { Button } from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker, TimePicker } from "@mui/x-date-pickers";
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
 import axios from "axios";
 
 import RadioButton from "../../components/RadioButton/RadioButton";
@@ -15,9 +17,11 @@ const ScheduleContent = (props) => {
   const [scheduleDate, setScheduleDate] = useState("");
   const [scheduleTime, setScheduleTime] = useState("");
   const [selected, setSelected] = useState("Zoom");
+  const [validationError, setValidationError] = useState(false);
 
   const zoomLinkChangeHandler = (event) => {
     setZoomLink(event.target.value);
+    setValidationError(false);
   };
 
   const handleSelect = (newValue) => {
@@ -26,6 +30,15 @@ const ScheduleContent = (props) => {
 
   const submitHandler = async (event) => {
     event.preventDefault();
+
+    // Check if the entered link is a Zoom link
+    const isZoomLink = /zoom/i.test(zoomLink);
+
+    if (!isZoomLink) {
+      setValidationError(true);
+      console.error("Please enter a valid Zoom link");
+      return;
+    }
 
     const type = selected === "Zoom" ? "zoom" : "f2f";
 
@@ -42,12 +55,19 @@ const ScheduleContent = (props) => {
     };
     // Pass the form data to the handler
     // props.onSubmit(formData);
-    const res = await axios.post(
-      "http://localhost:3100/api/schedule/sched-post",
-      formData
-    );
-
-    console.log(res.data);
+    try {
+      // Pass the form data to the handler
+      const res = await axios.post(
+        `${import.meta.env.VITE_BACKEND_DOMAIN}/schedule/sched-post`,
+        formData
+      );
+      if (res.data.message === "Schedule created successfully") {
+        window.location.reload();
+      }
+    } catch (error) {
+      // Handle the submission error as needed
+      console.error("Error submitting form:", error);
+    }
   };
 
   return (
@@ -68,15 +88,27 @@ const ScheduleContent = (props) => {
       <form onSubmit={submitHandler} className={`${styles["schedule-form"]}`}>
         {selected === "Zoom" && (
           <div className={`${styles["schedule-row"]}`}>
-            <input
+            <TextField
+              id="zoomLink"
+              label="Paste your zoom link here"
+              variant="outlined"
+              onChange={zoomLinkChangeHandler}
+              error={validationError}
+              helperText={
+                validationError ? "Please enter a valid Zoom link" : ""
+              }
+              sx={{ width: "100%" }}
+              className={validationError ? styles["error-textfield"] : ""}
+            />
+            {/* <input
               type="text"
               onChange={zoomLinkChangeHandler}
               placeholder="Paste here: https://zoom"
-            />
+            /> */}
             <Button
               variant="text"
               sx={{
-                height: "66px",
+                height: "99px",
                 background: "#066ADE",
                 color: "#FFFAFA",
                 fontSize: "16px",
