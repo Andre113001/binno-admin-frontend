@@ -56,9 +56,9 @@ const Sidebar = () => {
               <Link
                 key={index}
                 to={link.to}
-                className={`cursor-pointer text-gray-700 bg-gradient-to-r ${
+                className={`cursor-pointer text-gray-700 bg-gradient-to-tr ${
                   activeLink === link.to
-                    ? "from-gray-200 from-20% via-white via-40% to-secondary to-100% text-secondary"
+                    ? "from-gray-200 from-40% to-secondary to-100%  text-secondary "
                     : "bg-gray-200 border-none"
                 } p-2 pr-[2rem] border border-blue-500 rounded-xl space-x-5 transition duration-100 ease-in-out 
                 flex justify-center items-center`}

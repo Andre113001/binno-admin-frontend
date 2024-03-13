@@ -1,7 +1,16 @@
-import React from "react";
+import React, { Fragment } from "react";
+import Sidebar from "../../components/Sidebar/Sidebar";
+import StyledToggleButton from "../../components/ToggleButton/StyledToggleButton";
 
 function Inquiries() {
-  return <div>Inquiries</div>;
+  return (
+    <>
+      <Fragment>
+        <Sidebar />
+        <div className="container">{/* <StyledToggleButton /> */}</div>
+      </Fragment>
+    </>
+  );
 }
 
 export default Inquiries;
