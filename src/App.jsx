@@ -13,7 +13,7 @@ import Members from './pages/Members'
 import SystemSettings from './pages/SystemSettings'
 import Announce from './pages/Announce'
 import Contents from './pages/Contents'
-import TestComponents from './pages/Reports/TestComponents'
+import TestComponents from './pages/Test/PdfViewer'
 import Missing from './pages/Missing'
 import Requests from './pages/Requests'
 import Calendar from './pages/Calendar'
@@ -27,6 +27,8 @@ import Notification from './pages/Notification/Notification'
 import ActivityMonitoring from "./pages/ActivityMonitoring/ActivityMonitoring";
 import MemberView from './pages/MembershipManagement/MemberView'
 
+import Reports from './pages/Reports/Reports'
+
 function App() {
     const [authenticated, setAuthenticated] = useState(false) // You can set this based on the user's authentication status
 
@@ -37,6 +39,7 @@ function App() {
                     {/* Public Routes */}
                     <Route path="/" element={<Login />} />
                     <Route path="/test" element={<TestComponents />} />
+                    <Route path='/reports' element={<Reports />}/>
                     {/* <Route path="/dashboard" element={<Dashboard />} /> */}
                     <Route path="/calendar" element={<Calendar />} />
                     <Route path="/announce" element={<Announce />} />

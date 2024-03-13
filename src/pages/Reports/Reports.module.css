@@ -49,13 +49,6 @@
     margin-bottom: 20px; /* Add margin between rows */
 }
 
-.members-pie-chart {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    /* border: 1px solid black; */
-}
-
 .members-chart-metrics {
     display: flex;
     flex-direction: column;
@@ -108,14 +101,313 @@
     margin: 10px; /* Add margin between child elements */
 }
   
-  /* Adjust h2 and h1 styles as needed */
-  .content-metrics-child h2 {
+/* Adjust h2 and h1 styles as needed */
+.content-metrics-child h2 {
+font-size: 14px;
+}
+
+.content-metrics-child h1 {
+font-size: 24px;
+}
+
+.heading-title {
+    font-size: 64px;
+    font-weight: bold;
+}
+
+/* .print-btn {
+    border: 1px solid black;
+} */
+
+.heading-date {
+    /* border: 1px solid; */
+    margin: 30px 0px;
+    display: flex;
+    background-color: #f6f6f6;
+    padding: 75px;
+    border-radius: 10px;
+}
+
+.date {
+    /* border: 1px solid; */
+    flex: 2;
+    line-height: 60px;
+}
+
+.date span {
+    font-size: 24px;
+}
+
+.date .day {
+    font-size: 73px;
+}
+
+.date .full-date {
+    font-size: 40px;
+}
+
+.date-range {
+    /* border: 1px solid; */
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex: 1;
+}
+
+.members-section {
+    /* border: 1px solid; */
+    display: flex;
+}
+
+.members-pie-chart {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 2;
+}
+
+.section-title {
+    font-size: 48px;
+    font-weight: bold;
+}
+
+.recently-joined {
+    flex: 1;
+}
+
+.recently-joined h2 {
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.startup-box {
+    /* background-color: #d9d9d9; */
+    margin: 10px 0px 20px 0px;
+    border-radius: 5px;
+    padding: 15px;
+}
+
+.startup-box h3 {
+    font-size: 22px;
+}
+
+.list-item {
+    /* border: 1px solid; */
+    display: flex;
+    align-items: center;
+    margin: 15px 0 15px 0;
+    /* border-bottom: 1px solid rgb(174, 174, 174); */
+    padding: 10px;
+}
+
+.list-item:hover {
+    cursor: pointer;
+    
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+.list-img {
+    width: 50px; /* Fixed width */
+    height: 50px; /* Fixed height */
+    border-radius: 5px;
+    /* Add overflow property to handle content overflow */
+    overflow: hidden;
+    /* Add flex-shrink property to prevent the div from shrinking */
+    flex-shrink: 0;
+}
+
+
+.list-item p {
+    margin: 0;
+}
+
+.list-divider {
+    height: 50px; /* Adjust height as needed */
+     /* Add divider between list-img and p */
+    margin: 0px 20px 0px 10px; /* Add margin to create gap */
+}
+
+.custom-hr {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.content-graph {
+    /* border: 1px solid; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f6f6f6;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.content-metrics {
+    display: flex;
+    gap: 10%;
+    margin-top: 50px;
+}
+
+.metrics {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    line-height: normal;
+    /* border: 1px solid; */
+}
+
+.metric-number {
+    font-size: 64px;
+    font-weight: bold;
+    color: #ff7a00;
+}
+
+.metric-type {
     font-size: 14px;
+}
+
+.newsletter-section {
+    display: flex;
+    /* border: 1px solid; */
+    padding: 20px;
+}
+
+.newsletter-metric {
+    /* border: 1px solid; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+}
+
+.newsletter-metric-number {
+    color: #ff7a00;
+    font-weight: bold;
+    font-size: 199px;
+    margin-bottom: -70px;
+}
+
+.newsletter-metric-label {
+    font-size: 44px;
+}
+
+.newsletter-graph {
+    /* border: 1px solid; */
+    display: flex;
+    align-items: center;
+    flex: 2;
+    background-color: #f6f6f6;
+    border-radius: 10px;
+}
+
+.logo-img {
+    display: none;
+}
+
+.logo-img img {
+    width: 350px;
+}
+
+.time-printed {
+    display: none;
+}
+
+
+footer {
+    /* border: 1px solid; */
+    display: none;
+}
+
+@page {
+    size: A4;
+    margin: 0;
   }
   
-  .content-metrics-child h1 {
-    font-size: 24px;
-  }
+@media print {
+    body {
+        margin: 0; /* Reset default body margin */
+    }
+
+    .container {
+        margin: 20 auto; /* Center the content horizontally */
+        transform: scale(0.5);
+    }
+
+    .printable {
+        /* Adjust margins to fit content within the printable area */
+        padding: 20px; /* Add padding to ensure content is not too close to the edges */
+    }
+
+    .date-range {
+        display: none;
+    }
+
+    /* .newsletter-metric-number {
+        font-size: 150px;
+    } */
+    .section-title {
+        text-align: center;
+    }
+
+    .newsletter-metric-label {
+        font-size: 25px;
+    }
+
+    footer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 10px;
+    }
+
+    .day {
+        font-size: 120px;
+    }
+
+    .time-printed {
+        display: initial;
+    }
+
+    .recently-joined h2 {
+        font-size: 25px;
+    }
+
+    .more-btn {
+        display: none;
+    }
+
+    .logo-img {
+        display: flex;
+        /* border: 1px solid; */
+        align-items: center;
+        justify-content: center;
+        margin-bottom: -30px;
+    }
+
+    /* Adjust the size of specific elements if needed */
+    .heading-date {
+        margin-bottom: 20px; /* Add some space between sections */
+    }
+
+    .date { 
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .custom-hr {
+        margin-top: 20px; /* Adjust top margin of horizontal rule */
+        margin-bottom: 20px; /* Adjust bottom margin of horizontal rule */
+    }
+
+    .print-btn {
+        display: none;
+    }
+
+    /* Add more styles to fit your specific layout requirements */
+}
+
 
 /* .newsletter-line-graph {
     

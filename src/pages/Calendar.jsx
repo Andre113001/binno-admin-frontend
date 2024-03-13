@@ -92,16 +92,16 @@ const Calendar = () => {
             // Handle error
             // Return an appropriate status code, but not `res.status` here
         }
-        console.log('pressed')
-        console.log(
-            sched_id,
-            ' || ',
-            newSchedDate.format('MM-DD-YYYY'),
-            ' || ',
-            timeStart.format('HH:mm'),
-            '||',
-            timeEnd.format('HH:mm')
-        )
+        // console.log('pressed')
+        // console.log(
+        //     sched_id,
+        //     ' || ',
+        //     newSchedDate.format('MM-DD-YYYY'),
+        //     ' || ',
+        //     timeStart.format('HH:mm'),
+        //     '||',
+        //     timeEnd.format('HH:mm')
+        // )
         location.reload()
     }
 
@@ -189,7 +189,7 @@ const Calendar = () => {
                                         <div className="flex-1 flex items-center mt-4 gap-8">
                                             <div className="flex flex-col">
                                                 <p className="mb-1 text-2xl">
-                                                    Start
+                                                    Time
                                                 </p>
                                                 <TimePicker
                                                     // ampm={false}
@@ -202,7 +202,7 @@ const Calendar = () => {
                                                     }
                                                 />
                                             </div>
-                                            <div className="flex flex-col">
+                                            {/* <div className="flex flex-col">
                                                 <p className="mb-1 text-2xl">
                                                     End
                                                 </p>
@@ -216,7 +216,7 @@ const Calendar = () => {
                                                         setTimeEnd(newTime)
                                                     }
                                                 />
-                                            </div>
+                                            </div> */}
                                         </div>
                                     </div>
                                 </LocalizationProvider>
@@ -289,7 +289,7 @@ const Calendar = () => {
                                                         </button>
                                                     </Link>
                                                 </div>
-                                                <div>
+                                                {/* <div>
                                                     <button
                                                         onClick={() =>
                                                             handlePassdata(
@@ -301,7 +301,7 @@ const Calendar = () => {
                                                         <ScheduleSend />
                                                         <span>Reschedule</span>
                                                     </button>
-                                                </div>
+                                                </div> */}
                                             </div>
                                             <h4>{appointment.app_email}</h4>
                                             <span>
@@ -313,13 +313,6 @@ const Calendar = () => {
                                                         appointment.sched_timestart
                                                     }
                                                 </Moment>{' '}
-                                                -{' '}
-                                                <Moment
-                                                    format="hh:mm A"
-                                                    parse="HH:mm:ss"
-                                                >
-                                                    {appointment.sched_timedue}
-                                                </Moment>
                                             </span>
                                             {appointment.sched_zoomlink &&
                                             appointment.sched_zoomlink.length >
@@ -336,12 +329,12 @@ const Calendar = () => {
                                     <h1 className="text-6xl font-bold mb-5">
                                         No Scheduled Interview on this Date
                                     </h1>
-                                    <a
-                                        href="#"
+                                    <Link
+                                        to={'/applications'}
                                         className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                                     >
                                         Check Applications...
-                                    </a>
+                                    </Link>
                                 </div>
                             )}
                         </div>

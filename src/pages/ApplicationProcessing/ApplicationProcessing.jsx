@@ -46,7 +46,6 @@ const ApplicationProcessing = () => {
                     const res = await axios.get(`${import.meta.env.VITE_BACKEND_DOMAIN}/application/get/${appId}`);
                     console.log('Application Details:', res.data[0]); // Log the fetched application details
                     setAppDocs(res.data[0]);
-                    setOpenModal(true);
                     setModalType(1);
                 } catch (error) {
                     console.error('Error fetching application details:', error);
@@ -81,13 +80,13 @@ const ApplicationProcessing = () => {
                     </h6>
                 </div>
 
-                <div className={`${styles['filters']}`}>
+                {/* <div className={`${styles['filters']}`}> */}
                     {/* <div className={`${styles['section_1']}`}>
                         <Dropdown />
                         <Dropdown />
                     </div> */}
 
-                    <div>
+                    {/* <div>
                         <div>
                             <TextField
                                 placeholder="Search"
@@ -110,8 +109,8 @@ const ApplicationProcessing = () => {
                                 }}
                             />
                         </div>
-                    </div>
-                </div>
+                    </div> */}
+                {/* </div> */}
 
                 <div className={`${styles['application-processing-table']}`}>
                     <table width={'100%'}>

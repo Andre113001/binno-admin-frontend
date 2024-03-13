@@ -1,4 +1,17 @@
-import { Button, CircularProgress } from '@mui/material';
+import { 
+    Button, 
+    CircularProgress, 
+    Divider,
+    Box,
+    MenuItem,
+    FormControl,
+    Select,
+    Radio,
+    RadioGroup,
+    FormControlLabel,
+    TextField
+} from '@mui/material';
+
 import styles from './ApplicationProcessing.module.css';
 import EnablerImage from './EnablerImage';
 import Dropdown from '../../components/Dropdowmn/Dropdown';
@@ -6,7 +19,7 @@ import ApplicationProcessingModalSchedule from './ApplicationProcessingModalSche
 import ApplicationProcessingModalContent from './ApplicationProcessingModalContent';
 import Moment from 'react-moment';
 import moment from 'moment';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -19,13 +32,20 @@ const DocumentContent = (props) => {
 
     const { sendRequest, isLoading } = useHttp();
 
-    const [selected, setSelected] = useState(1);
+    const [selected, setSelected] = useState('Approve');
     const [ schedule, setSchedule ] = useState();
     const [loadingSchedule, setLoadingSchedule] = useState(false); // State to track loading state
+    const [ declineReason, setDeclineReason ] = useState();
+    const otherReason = useRef(null);
 
     const handleSelect = (e) => {
         setSelected(e);
     };
+
+    const handleDeclineReasonChange = (e) => {
+        setDeclineReason(e.target.value);
+        // console.log(e.target.value);
+    }
 
     useEffect(() => {
         const loadSchedule = async () => {
@@ -41,7 +61,7 @@ const DocumentContent = (props) => {
         loadSchedule();
     }, [appDocs]);
 
-    console.log(appDocs);
+    // console.log(appDocs);
 
     const handleButtonClick = () => {
         if (schedule) {
@@ -54,28 +74,64 @@ const DocumentContent = (props) => {
     };
 
     
-    const handleConfirm = async () => {
-        const res = await sendRequest({
-            url: `${import.meta.env.VITE_BACKEND_DOMAIN}/application`,
-            method: 'PATCH',
-            body: JSON.stringify({
-                appId: appDocs.app_id,
-                isApproved: selected === 1 ? true : false,
+    const handleConfirm = async () => {        
+        if (selected === 'Approve') {
+            console.log("Approving");
+            const res = await sendRequest({
+                url: `${import.meta.env.VITE_BACKEND_DOMAIN}/application/approval`,
+                method: 'POST',
+                body: JSON.stringify({
+                    appId: appDocs.app_id,
+                    approve: true,
             }),
         });
+        
+        if (res) {
+            console.log("Approved");
+            window.location.reload();
+        }
 
-        console.log(res);
+        } else if (selected === 'Decline') {
+            let reason;
+            if (otherReason.current != null) {
+                reason = otherReason.current.value;
+                // alert(otherReason.current.value);
+            } else {
+                reason = declineReason;
+                // alert(declineReason);
+            }
 
-        axios.post('http://localhost:3400/membership/approved', {
-            receiver: res.email,
-            accesskey: res.randomDigits,
-            tmpPassword: res.randomDigits
-        },{
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            withCredentials: true
-        });
+            const res = await sendRequest({
+                url: `${import.meta.env.VITE_BACKEND_DOMAIN}/application/approval`,
+                method: 'POST',
+                body: JSON.stringify({
+                    appId: appDocs.app_id,
+                    approve: false,
+                    reason: reason
+                }),
+            });
+
+            if (res) {
+                window.location.reload();
+            }
+            
+        } else {
+            alert('ERROR');
+        }
+
+
+        // console.log(res);
+
+        // axios.post('http://localhost:3400/membership/approved', {
+        //     receiver: res.email,
+        //     accesskey: res.randomDigits,
+        //     tmpPassword: res.randomDigits
+        // },{
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //     },
+        //     withCredentials: true
+        // });
     };
 
     return (
@@ -106,7 +162,7 @@ const DocumentContent = (props) => {
                         ) : schedule ? (
                             <button onClick={handleButtonClick}>Scheduled Interview <br /> <Moment format='MMM DD, YYYY'>{schedule}</Moment></button>
                         ) : (
-                            <button onClick={handleButtonClick}>Set a schedule</button>
+                            <button onClick={handleButtonClick}>Set a schedule for Interview</button>
                         )}
                     </div>
                 </div>
@@ -143,14 +199,24 @@ const DocumentContent = (props) => {
 
             <div className={`${styles['enabler-document']}`}>
                 <div className={`${styles['file']}`}>
-                    <h1>Document</h1>
+                    <h1>Review Documents</h1>
                     <EnablerImage appDocs={appDocs} id={appDocs.app_id} />
                 </div>
 
+                <Divider />
+                
+                <div className={`${styles['file']}`}>
+                    <h1>Response</h1>
+                </div>
                 <div className={`${styles['enabler-button']}`}>
                     <Dropdown
                         selected={selected}
                         onSelect={handleSelect}
+                        options={[
+                            { value: 'Approve', label: 'Approve' },
+                            { value: 'Decline', label: 'Decline' },
+                            // Add more options as needed
+                        ]}
                         style={{
                             height: '44px',
                             width: '256px',
@@ -159,6 +225,49 @@ const DocumentContent = (props) => {
                             fontWeight: '700',
                         }}
                     />
+
+                    {selected === 'Decline' && (
+                        <div>
+                            <FormControl component="fieldset">
+                                <RadioGroup 
+                                    value={declineReason} 
+                                    onChange={handleDeclineReasonChange}
+                                >
+                                    <FormControlLabel 
+                                        value="Documents are insufficient" 
+                                        control={<Radio />} 
+                                        label="Documents are insufficient" 
+                                    />
+                                    <FormControlLabel 
+                                        value="Documents are blurry" 
+                                        control={<Radio />} 
+                                        label="Documents are blurry" 
+                                    />
+                                    <FormControlLabel 
+                                        value="Documents are incorrect" 
+                                        control={<Radio />} 
+                                        label="Documents are incorrect" 
+                                    />
+                                    <FormControlLabel 
+                                        value="others" 
+                                        control={<Radio />} 
+                                        label="Others" 
+                                    />
+                                </RadioGroup>
+                                {declineReason === 'others' && (
+                                    <TextField
+                                        id="other-reason"
+                                        label="Other Reason/s"
+                                        inputRef={otherReason}
+                                        multiline
+                                        rows={10}
+                                        fullWidth
+                                    />
+                                )}
+                            </FormControl>
+                        </div>
+                    )}
+                    
                     <Button
                         sx={{
                             background: '#FF7A00',

@@ -1,14 +1,16 @@
-import { Fragment, useState } from 'react';
+import { Fragment, useState, useRef } from 'react';
+import { Print } from 'react-to-print';
 import styles from './Reports.module.css';
 
 import Topbar from '../../components/Topbar/Topbar';
 
 import { LineChart, PieChart, pieArcLabelClasses } from '@mui/x-charts';
-import { Tabs, Tab, Select, MenuItem } from '@mui/material';
+import { Tabs, Tab, Select, MenuItem, Button } from '@mui/material';
 
 function TestComponents() {
   const [tabIndex, setTabIndex] = useState(0);
   const [timePeriod, setTimePeriod] = useState('week');
+  const containerRef = useRef(null);
 
   const handleTabChange = (event, newValue) => {
     setTabIndex(newValue);
@@ -33,12 +35,21 @@ function TestComponents() {
     }
   };
 
+  // const handlePrint = () => {
+  //   const container = containerRef.current;
+  //   if (container) {
+  //     window.print();
+  //   }
+  // }
+
   return (
     <Fragment>
-      <Topbar />
-      <div className={`${styles['container']}`}>
+      <Topbar className={`${styles['print-hidden']}`} />
+      <div className={`${styles['container']}`} ref={containerRef}>
+        <Button variant='contained' className={`${styles['print-hidden']}`}>
+          Print
+        </Button>
         <main className={`${styles['main-contents']}`}>
-         
           <div className={`${styles['row']}`}>
             <div className={`${styles['col']}`}>
               <h1>Members</h1>
@@ -128,7 +139,10 @@ function TestComponents() {
             
           <div className={`${styles['content-graph-container']}`}>
             <LineChart
-              xAxis={[{ data: getXAxisData() }]}
+              xAxis={[{ 
+                data: getXAxisData(),
+                scaleType: 'point'
+              }]}
               series={[
                 {
                   data: [2, 5.5, 2, 8.5, 1.5, 5],

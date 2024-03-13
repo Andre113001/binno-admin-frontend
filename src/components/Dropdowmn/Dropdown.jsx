@@ -32,6 +32,7 @@ export default function Dropdown(props) {
                     }}
                     {...props}
                 >
+                    {/* Mapping over options to create MenuItems */}
                     {options?.map(option => (
                         <MenuItem key={option.value} value={option.value}>
                             {option.label}

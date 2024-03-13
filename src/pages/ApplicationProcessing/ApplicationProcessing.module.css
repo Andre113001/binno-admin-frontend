@@ -175,8 +175,8 @@
 }
 
 .file img {
-    width: 281.418px;
-    height: 385px;
+    width: 700px;
+    height: 500px;
     object-fit: cover;
 
     background: lightgray 50% / cover no-repeat;
@@ -257,5 +257,5 @@
 }
 
 .image-container {
-    border: 1px solid red;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }

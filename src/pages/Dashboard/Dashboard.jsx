@@ -9,6 +9,7 @@ import PendingPostIcon from './PendingPostIcon'
 import ContentIcon from './ContentIcon'
 
 import styles from './Dashboard.module.css'
+import Sidebar from '../../components/Sidebar/Sidebar'
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
 import PendingMembersIcon from './PendingMembersIcon'
 import { Button, IconButton } from '@mui/material'
@@ -73,13 +74,14 @@ const AdminDashboard = () => {
     }, [])
 
     return (
-        <Fragment>
-            <Topbar />
+        <Fragment >
+            {/* <Topbar /> */}
+            <Sidebar />
 
             <div className={`${styles['container']}`}>
                 <main className={`${styles['main-contents']}`}>
                     <div className={`${styles['overview']}`}>
-                        <h1>Report Overview</h1>
+                        <h1 className='text-primary'>Report Overview</h1>
 
                         <div className={`${styles['overview-content']}`}>
                             <Link className={`${styles['overview-col']}`}>
@@ -130,7 +132,7 @@ const AdminDashboard = () => {
                                 </div>
                             </div>
 
-                            <div
+                            {/* <div
                                 className={`${styles['overview-col']}`}
                                 // to={'/admin/membership_management'}
                             >
@@ -164,9 +166,14 @@ const AdminDashboard = () => {
                                     </div>
                                     <p>STARTUP COMPANIES</p>
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
+                    <Link to={'/reports'}>
+                        <div className={`${styles['see-reports']}`}>
+                            <span>See more</span>
+                        </div>
+                    </Link>
 
                     <div className={`${styles['pending-content']}`}>
                         {/* <div
