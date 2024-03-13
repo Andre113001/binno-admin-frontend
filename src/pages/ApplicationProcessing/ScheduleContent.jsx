@@ -28,7 +28,7 @@ const ScheduleContent = (props) => {
     setSelected(newValue);
   };
 
-  const submitHandler = async (event) => {
+  const submitZoomHandler = async (event) => {
     event.preventDefault();
 
     // Check if the entered link is a Zoom link
@@ -40,11 +40,40 @@ const ScheduleContent = (props) => {
       return;
     }
 
-    const type = selected === "Zoom" ? "zoom" : "f2f";
+    // Extract the form values
+    const formData = {
+      type: "zoom",
+      schedDate: "2024-02-18", // fix format application_date
+      schedAppId: application.app_id,
+      schedZoomLink: zoomLink,
+      schedStart: "15:00:00", // Fix
+      schedEnd: "18:00:00", // Fix
+      receiver: application.app_email,
+      username: application.app_institution,
+    };
+    // Pass the form data to the handler
+    // props.onSubmit(formData);
+    try {
+      // Pass the form data to the handler
+      const res = await axios.post(
+        `${import.meta.env.VITE_BACKEND_DOMAIN}/schedule/sched-post`,
+        formData
+      );
+      if (res.data.message === "Schedule created successfully") {
+        window.location.reload();
+      }
+    } catch (error) {
+      // Handle the submission error as needed
+      console.error("Error submitting form:", error);
+    }
+  };
+
+  const submitF2FHandler = async (event) => {
+    event.preventDefault();
 
     // Extract the form values
     const formData = {
-      type: type,
+      type: "f2f",
       schedDate: "2024-02-18", // fix format application_date
       schedAppId: application.app_id,
       schedZoomLink: zoomLink,
@@ -85,7 +114,10 @@ const ScheduleContent = (props) => {
         />
       </div>
 
-      <form onSubmit={submitHandler} className={`${styles["schedule-form"]}`}>
+      <form
+        onSubmit={selected === "Zoom" ? submitZoomHandler : submitF2FHandler}
+        className={`${styles["schedule-form"]}`}
+      >
         {selected === "Zoom" && (
           <div className={`${styles["schedule-row"]}`}>
             <TextField
@@ -124,54 +156,108 @@ const ScheduleContent = (props) => {
             </Button>
           </div>
         )}
-        <div className={`${styles["date-row"]}`}>
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DatePicker
-              sx={{
-                "& .MuiInputBase-root": {
-                  height: "76px",
+        {selected === "Zoom" && (
+          <div className={`${styles["date-row"]}`}>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DatePicker
+                sx={{
+                  "& .MuiInputBase-root": {
+                    height: "76px",
+                    width: "100%",
+                  },
                   width: "100%",
-                },
-                width: "100%",
-              }}
-              // Assume you have a onChange handler for DatePicker that updates scheduleDate state
-              onChange={(newValue) => setScheduleDate(newValue)}
-            />
-            <TimePicker
-              sx={{
-                "& .MuiInputBase-root": {
-                  height: "76px",
+                }}
+                // Assume you have a onChange handler for DatePicker that updates scheduleDate state
+                onChange={(newValue) => setScheduleDate(newValue)}
+              />
+              <TimePicker
+                sx={{
+                  "& .MuiInputBase-root": {
+                    height: "76px",
+                    width: "100%",
+                    marginTop: 2,
+                  },
                   width: "100%",
-                  marginTop: 2,
-                },
-                width: "100%",
-              }}
-              // Assume you have a onChange handler for TimePicker that updates scheduleDate state
-              onChange={(newValue) => setScheduleTime(newValue)}
-            />
-          </LocalizationProvider>
-        </div>
-
-        <Button
-          type="submit" // Add type="submit" to trigger form submission
-          variant="text"
-          sx={{
-            width: "232px",
-            height: "66px",
-            background: "#FB7901",
-            color: "#fff",
-            fontSize: "16px",
-            "&:hover": {
+                }}
+                // Assume you have a onChange handler for TimePicker that updates scheduleDate state
+                onChange={(newValue) => setScheduleTime(newValue)}
+              />
+            </LocalizationProvider>
+          </div>
+        )}
+        {selected === "Zoom" && (
+          <Button
+            type="submit"
+            variant="text"
+            sx={{
+              width: "232px",
+              height: "66px",
               background: "#FB7901",
-            },
-            fontWeight: "700",
-            borderRadius: "10px",
-            margin: "70px",
-            marginBottom: "0px",
-          }}
-        >
-          Send
-        </Button>
+              color: "#fff",
+              fontSize: "16px",
+              "&:hover": {
+                background: "#FB7901",
+              },
+              fontWeight: "700",
+              borderRadius: "10px",
+              margin: "70px",
+              marginBottom: "0px",
+            }}
+          >
+            Send
+          </Button>
+        )}
+        {selected === "Face-to-face" && (
+          <div className={`${styles["date-row"]}`}>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DatePicker
+                sx={{
+                  "& .MuiInputBase-root": {
+                    height: "76px",
+                    width: "100%",
+                  },
+                  width: "100%",
+                }}
+                // Assume you have a onChange handler for DatePicker that updates scheduleDate state
+                onChange={(newValue) => setScheduleDate(newValue)}
+              />
+              <TimePicker
+                sx={{
+                  "& .MuiInputBase-root": {
+                    height: "76px",
+                    width: "100%",
+                    marginTop: 2,
+                  },
+                  width: "100%",
+                }}
+                // Assume you have a onChange handler for TimePicker that updates scheduleDate state
+                onChange={(newValue) => setScheduleTime(newValue)}
+              />
+            </LocalizationProvider>
+          </div>
+        )}
+        {selected === "Face-to-face" && (
+          <Button
+            type="submit"
+            variant="text"
+            sx={{
+              width: "232px",
+              height: "66px",
+              background: "#FB7901",
+              color: "#fff",
+              fontSize: "16px",
+              "&:hover": {
+                background: "#FB7901",
+              },
+              fontWeight: "700",
+              borderRadius: "10px",
+              margin: "70px",
+              marginBottom: "0px",
+            }}
+          >
+            Send
+          </Button>
+        )}
       </form>
     </div>
   );
