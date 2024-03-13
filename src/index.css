@@ -14,7 +14,7 @@
 }
 
 .container {
-    @apply w-[65%] mx-auto;
+    @apply w-[75%] ml-[20%];
 }
 
 
