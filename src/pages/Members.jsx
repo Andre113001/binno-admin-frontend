@@ -4,12 +4,12 @@ import axios from 'axios'
 
 
 // Components
-// import Topbar from '../components/Topbar/Topbar';
+// import Sidebar from '../components/Sidebar/Sidebar';
 import Button from '../components/Button/Button';
 import Back from '../components/Back/Back';
 import MemberNav from '../components/MemberNav/MemberNav';
 import {Delete as DeleteIcon, Send as SendIcon} from '@mui/icons-material';
-import Topbar from '../components/Topbar/Topbar';
+import Sidebar from '../components/Sidebar/Sidebar';
 
 
 function Members() {
@@ -24,7 +24,7 @@ function Members() {
 
     return (
         <div>
-            <Topbar />
+            <Sidebar />
             <div className='mb-4'>
                 <div className="container">
                     <Back link='/dashboard' />

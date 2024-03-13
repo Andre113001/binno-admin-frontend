@@ -1,12 +1,12 @@
 import React from 'react'
 
 // Components
-import Topbar from '../components/Topbar/Topbar'
+import Sidebar from '../components/Sidebar/Sidebar'
 
 function Contents() {
   return (
     <div>
-        <Topbar />
+        <Sidebar />
         <h1>I'm From Contents</h1>
     </div>
   )

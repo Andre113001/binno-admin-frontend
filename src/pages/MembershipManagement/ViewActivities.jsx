@@ -3,7 +3,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import { TextField, Pagination } from "@mui/material";
 
 import Back from "../../components/Back/Back";
-import Topbar from "../../components/Topbar/Topbar";
+import Sidebar from "../../components/Sidebar/Sidebar";
 import processingStyle from "../ApplicationProcessing/ApplicationProcessing.module.css";
 import Dropdown from "../../components/Dropdowmn/Dropdown";
 
@@ -57,7 +57,7 @@ const ViewActivities = () => {
 
   return (
     <Fragment>
-      <Topbar />
+      <Sidebar />
 
       <div className="container">
         <div>

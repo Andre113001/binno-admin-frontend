@@ -1,15 +1,15 @@
-import React from 'react'
+import React from "react";
 
 // Components
-import Topbar from '../components/Topbar/Topbar'
+import Sidebar from "../components/Sidebar/Sidebar";
 
 function SystemSettings() {
   return (
     <div>
-        <Topbar />
-        <h1>I'm From SystemSettings</h1>
+      <Sidebar />
+      <h1>I'm From SystemSettings</h1>
     </div>
-  )
+  );
 }
 
-export default SystemSettings
+export default SystemSettings;

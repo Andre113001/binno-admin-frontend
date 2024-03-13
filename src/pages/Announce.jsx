@@ -1,16 +1,16 @@
-import React from 'react'
-import Topbar from '../components/Topbar/Topbar'
+import React from "react";
+import Sidebar from "../components/Sidebar/Sidebar";
 
-// Components 
-// import Topbar from '../components/Topbar/Topbar'
+// Components
+// import Sidebar from '../components/Sidebar/Sidebar'
 
 function Announce() {
   return (
     <div>
-      <Topbar />
+      <Sidebar />
       <h1>I'm From Announce</h1>
     </div>
-  )
+  );
 }
 
-export default Announce
+export default Announce;
