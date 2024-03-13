@@ -8,8 +8,9 @@ import Back from "../../components/Back/Back";
 import Dropdown from "../../components/Dropdowmn/Dropdown";
 import { TextField } from "@mui/material";
 import MembershipManagementList from "./MembershipManagementList";
-import Topbar from "../../components/Topbar/Topbar";
+// import Topbar from "../../components/Topbar/Topbar";
 import useHttp from "../../hooks/http-hook";
+import Sidebar from "../../components/Sidebar/Sidebar";
 
 const MembershipManagement = () => {
   const [members, setMembers] = useState([]);
@@ -68,7 +69,7 @@ const MembershipManagement = () => {
 
   return (
     <Fragment>
-      <Topbar />
+      <Sidebar />
       <div className="container">
         <div onClick={() => navigate(-1)}>
           <Back />
