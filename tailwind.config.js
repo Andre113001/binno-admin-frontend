@@ -9,7 +9,8 @@ export default {
     extend: {
       colors: {
         primary: '#FF7A00',
-        secondary: '#5c9fef'
+        secondary: '#5c9fef',
+        darkWhite: 'D9D9D9' 
       }
     },
   },

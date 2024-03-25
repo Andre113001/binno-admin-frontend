@@ -26,7 +26,7 @@ import AdminDashboard from "./pages/Dashboard/Dashboard";
 import Notification from "./pages/Notification/Notification";
 import ActivityMonitoring from "./pages/ActivityMonitoring/ActivityMonitoring";
 import MemberView from "./pages/MembershipManagement/MemberView";
-import Inquiries from "./pages/Inquiries/Inquiries";
+import Inquiries from "./pages/Inquiries/FAQDisplayList";
 
 import Reports from "./pages/Reports/Reports";
 
