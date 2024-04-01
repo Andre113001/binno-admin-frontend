@@ -2,10 +2,8 @@ import React, { useState } from "react";
 import Inquiries from "../FAQ_data";
 import { IconButton } from "@mui/material";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
-import CustomModal from "../../../components/CustomModal/CustomModal.jsx";
 
 function FAQDelete() {
-  const { handleClose, handleOpen, CustomModal } = useCustomModal();
   return (
     <>
       <div className="flex flex-col items-center">
@@ -21,7 +19,6 @@ function FAQDelete() {
               <p>{item.inquiry}</p>
             </div>
             <IconButton
-              // onClick={CustomModal}
               aria-label="Edit"
               size="large"
               style={{

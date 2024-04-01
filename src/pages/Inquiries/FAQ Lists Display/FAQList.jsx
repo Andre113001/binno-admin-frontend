@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import FAQEdit from "./FAQ Functional List/FAQEdit";
-import FAQAdd from "./FAQ Functional List/FAQDelete";
+import FAQAdd from "./FAQ Functional List/FAQAdd";
 import FAQDelete from "./FAQ Functional List/FAQDelete";
 import Inquiries from "./FAQ_data";
 import { Stack } from "@mui/system";
@@ -64,6 +64,7 @@ function FAQList() {
               </Stack>
             </div>
           )}
+
           {isEditActive && (
             <div className="flex flex-col items-center">
               <FAQEdit />
@@ -82,20 +83,24 @@ function FAQList() {
             </div>
           )}
 
-          <div className="flex flex-col items-center">
-            {/* list cards */}
-            {Inquiries.map((item) => (
-              // card design
-              <div
-                className="flex w-[80%] flex-col my-7 rounded bg-darkWhite"
-                key={item.id}
-              >
-                <h1 className="font-bold">{item.title}</h1>
-                <p>{item.inquiry}</p>
-              </div>
-            ))}
-          </div>
+          {isNavigationVisible && (
+            // conditionally render content when navigation is clicked
+            <div className="flex flex-col items-center">
+              {/* list cards */}
+              {Inquiries.map((item) => (
+                // card design
+                <div
+                  className="flex w-[80%] flex-col my-7 rounded bg-darkWhite"
+                  key={item.id}
+                >
+                  <h1 className="font-bold">{item.title}</h1>
+                  <p>{item.inquiry}</p>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
+
         {/* Function display container*/}
       </div>
     </>

@@ -1,8 +1,8 @@
 import React, { Fragment } from "react";
-import Sidebar from "../../components/Sidebar/Sidebar";
-import StyledToggleButton from "../../components/ToggleButton/StyledToggleButton";
-import SearchBar from "../../components/Search Bar/Searchbar";
+import Sidebar from "../../../components/Sidebar/Sidebar";
+import StyledToggleButton from "../../../components/ToggleButton/StyledToggleButton";
 import FAQList from "./FAQList";
+import SearchBar from "../../../components/Search Bar/Searchbar";
 
 function FAQDisplayList() {
   return (
