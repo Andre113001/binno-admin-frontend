@@ -27,6 +27,9 @@ import Notification from "./pages/Notification/Notification";
 import ActivityMonitoring from "./pages/ActivityMonitoring/ActivityMonitoring";
 import MemberView from "./pages/MembershipManagement/MemberView";
 import Inquiries from "./pages/Inquiries/FAQ Lists Display/FAQDisplayList.jsx";
+import FAQAdd from "./pages/Inquiries/FAQ Lists Display/FAQ Functional List/FAQAdd.jsx";
+import FAQDelete from "./pages/Inquiries/FAQ Lists Display/FAQ Functional List/FAQDelete.jsx";
+import FAQEdit from "./pages/Inquiries/FAQ Lists Display/FAQ Functional List/FAQEdit.jsx";
 
 import Reports from "./pages/Reports/Reports";
 
@@ -56,6 +59,9 @@ function App() {
           />
 
           <Route path="/inquiries" element={<Inquiries />} />
+          <Route path="/inquiries/edit" element={<FAQEdit />} />
+          <Route path="/inquiries/add" element={<FAQAdd />} />
+          <Route path="/inquiries/delete" element={<FAQDelete />} />
 
           {/* Catch */}
           <Route path="/missing" element={<Missing />} />
