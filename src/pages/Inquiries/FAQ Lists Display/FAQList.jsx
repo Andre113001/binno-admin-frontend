@@ -108,7 +108,7 @@ function FAQList() {
 
           {isNavigationVisible && (
             // conditionally render content when navigation is clicked
-            <div className="flex flex-col items-center ">
+            <div className="flex flex-col items-center">
               {/* list cards */}
               {Inquiries.map((item) => (
                 // card design

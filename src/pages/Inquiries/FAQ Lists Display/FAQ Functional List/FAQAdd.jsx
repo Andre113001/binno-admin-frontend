@@ -39,7 +39,7 @@ function FAQAdd() {
               {/* parent add container */}
               <div className="flex flex-col my-4 w-[100%]">
                 {/* title container */}
-                <div className="flex flex-row items-center mb-5">
+                <div className="flex flex-row items-center mb-2">
                   <h1 className="font-bold text-2xl mr-5">Title: </h1>
                   <input
                     type="text"
@@ -48,14 +48,13 @@ function FAQAdd() {
                   />
                 </div>
                 {/* content container */}
-                <div className="flex flex-row items-center">
+                <div className="flex flex-row">
                   {/* <h1 className=" font-bold text-xl mr-5">Content: </h1> */}
-                  <TextField
-                    id="outlined-textarea"
-                    label="Content"
-                    sx={{ width: "100%" }}
-                    multiline
-                    minRows={4}
+                  <h1 className="font-bold text-2xl mr-5">Content: </h1>
+                  <textarea
+                    className="outline-none items-center text-xl w-[95%]"
+                    id="FAQContent"
+                    rows="6"
                   />
                 </div>
                 <div className="flex flex-row my-5">

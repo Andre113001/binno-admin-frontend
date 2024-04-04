@@ -8,7 +8,7 @@ function FAQDisplayList() {
       <Fragment>
         <Sidebar />
         {/* page container */}
-        <div className="container flex-col m-10 bg-darkWhite">
+        <div className=" flex container flex-col m-10 bg-darkWhite">
           {/* title and search container */}
           <div className="flex w-full">
             <FAQList />
