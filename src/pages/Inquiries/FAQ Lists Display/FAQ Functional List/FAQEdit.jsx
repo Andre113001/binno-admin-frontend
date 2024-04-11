@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from 'react';
 import Inquiries from "../FAQ_data";
 import { IconButton } from "@mui/material";
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
@@ -8,6 +8,21 @@ import Sidebar from "../../../../components/Sidebar/Sidebar";
 import { Link } from "react-router-dom";
 
 function FAQEdit() {
+  // State to manage the edit mode and button visibility for each row
+  const [rowsState, setRowsState] = useState(Inquiries.map(() => ({ readOnly: true, showButtons: false })));
+
+  // Function to toggle the edit mode and button visibility for a specific row
+  const handleEditClick = (index) => {
+    setRowsState(prevState => {
+      const newState = [...prevState];
+      newState[index] = {
+        readOnly: false,
+        showButtons: true
+      };
+      return newState;
+    });
+  };
+
   return (
     <>
       <Fragment>
@@ -26,39 +41,57 @@ function FAQEdit() {
             Frequently Asked Question
             <SearchBar />
           </div>
-          <div className="flex flex-col items-center">
-            {Inquiries.map((item) => (
-              // card design
+          <div className="flex flex-col w-full items-center w-full">
+            {Inquiries.map((item, index) => (
               <div
-                className="flex w-[80%] flex-row items-center my-7 rounded bg-darkWhite "
+                className="flex w-full flex-col items-center my-7 rounded bg-darkWhite "
                 key={item.id}
               >
-                {/* content layout */}
-                <div className="flex flex-row grow">
-                  {/* title container */}
+                <div className="flex flex-row w-[80%] grow">
                   <div className="flex flex-col">
                     <h1 className="font-bold text-lg mr-5">Title: </h1>
                     <h1 className=" font-bold text-lg mr-5">Content: </h1>
                   </div>
-                  {/* content container */}
-                  <div className="flex flex-col">
+                  <div className="flex flex-col w-full">
                     <h1 className="font-bold">{item.title}</h1>
-                    <p className="mr-2 mt-2">{item.inquiry}</p>
+                    <textarea
+                      readOnly={rowsState[index].readOnly}
+                      rows="6"
+                      style={{
+                        resize: 'none', // Disable textarea resizing
+                        overflow: 'hidden', // Hide scrollbar
+                      }}
+                      className="mr-2 mt-2 w-full">{item.inquiry}</textarea>
                   </div>
+                  <IconButton
+                    onClick={() => handleEditClick(index)}
+                    aria-label="Edit"
+                    size="large"
+                    style={{
+                      backgroundColor: "#5c9fef",
+                      color: "#fff",
+                      margin: "24px",
+                      borderRadius: "15px",
+                      width: "45px",
+                      height: "45px ",
+                      alignSelf: "center"
+                    }}
+                  >
+                    <EditRoundedIcon />
+                  </IconButton>
                 </div>
-                <IconButton
-                  // onClick={}
-                  aria-label="Edit"
-                  size="large"
-                  style={{
-                    backgroundColor: "#5c9fef",
-                    color: "#fff",
-                    margin: "24px",
-                    borderRadius: "15px",
-                  }}
-                >
-                  <EditRoundedIcon />
-                </IconButton>
+                {rowsState[index].showButtons && (
+                  <div className="flex flex-row w-[80%] my-5">
+                    <button
+                      className="p-2 mx-2 w-[50%] border border-secondary font-bold text-secondary rounded-full"
+                    >
+                      Cancel
+                    </button>
+                    <button className="p-2 mx-2 w-[50%] border font-bold rounded-full text-white bg-secondary">
+                      Add FAQ
+                    </button>
+                  </div>
+                )}
               </div>
             ))}
           </div>
