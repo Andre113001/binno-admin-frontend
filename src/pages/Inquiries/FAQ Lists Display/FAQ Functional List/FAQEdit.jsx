@@ -34,16 +34,16 @@ function FAQEdit() {
                 key={item.id}
               >
                 {/* content layout */}
-                <div className="flex flex-row grow">
+                <div className="flex flex-col">
                   {/* title container */}
-                  <div className="flex flex-col">
-                    <h1 className="font-bold text-lg mr-5">Title: </h1>
-                    <h1 className=" font-bold text-lg mr-5">Content: </h1>
+                  <div className="flex flex-row items-center mb-2">
+                    <h1 className="font-bold text-2xl mr-10">Title: </h1>
+                    <h1 className="font-bold text-xl">{item.title}</h1>
                   </div>
                   {/* content container */}
-                  <div className="flex flex-col">
-                    <h1 className="font-bold">{item.title}</h1>
-                    <p className="mr-2 mt-2">{item.inquiry}</p>
+                  <div className="flex flex-row items-start">
+                    <h1 className="font-bold text-xl mr-4">Content: </h1>
+                    <p className="mr-2">{item.inquiry}</p>
                   </div>
                 </div>
                 <IconButton
