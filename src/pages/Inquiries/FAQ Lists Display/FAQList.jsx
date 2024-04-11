@@ -9,7 +9,7 @@ import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import AddBoxRoundedIcon from "@mui/icons-material/AddBoxRounded";
 import { IconButton, Link } from "@mui/material";
 import SearchBar from "../../../components/Search Bar/Searchbar";
-import StyledToggleButton from "../../../components/ToggleButton/StyledToggleButton";
+import OptionButton from "../OptionButton";
 
 function FAQList() {
   const [isEditActive, setIsEditActive] = useState(false);
@@ -37,12 +37,7 @@ function FAQList() {
       {/* parent container */}
       <div className="flex flex-col w-full ">
         {/* default page */}
-        {isNavigationVisible && (
-          <div className="flex w-full mx-5 mb-8">
-            <StyledToggleButton />
-            {/* done button container */}
-          </div>
-        )}
+
         <div className="flex flex-col w-full">
           {isNavigationVisible && (
             <div className="flex flex-col items-center text-5xl font-bold text-primary justify-center w-[100%] ">
@@ -52,7 +47,7 @@ function FAQList() {
           )}
           {/* list controls  */}
           {isNavigationVisible && (
-            <div className="flex items-start my-2 mx-20">
+            <div className="flex items-start my-2">
               <Stack direction="row">
                 {/* for edit link */}
                 <Link href="/inquiries/edit" underline="none">
@@ -113,7 +108,7 @@ function FAQList() {
               {Inquiries.map((item) => (
                 // card design
                 <div
-                  className="flex w-[80%] flex-col my-7 rounded bg-darkWhite"
+                  className="flex w-[95%] flex-col my-7 rounded bg-darkWhite"
                   key={item.id}
                 >
                   <h1 className="font-bold">{item.title}</h1>

@@ -1,20 +1,20 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import Sidebar from "../../../components/Sidebar/Sidebar";
 import FAQList from "./FAQList";
+import CustomTabPanel from "../../../pages/Inquiries/OptionButton";
 
 function FAQDisplayList() {
+  const [isNavigationVisible, setIsNavigationVisible] = useState(true);
+
   return (
     <>
-      <Fragment>
-        <Sidebar />
-        {/* page container */}
-        <div className=" flex container flex-col m-10 bg-darkWhite">
-          {/* title and search container */}
-          <div className="flex w-full">
-            <FAQList />
-          </div>
+      {/* page container */}
+      <div className=" flex container flex-col m-10 w-full bg-darkWhite">
+        {/* title and search container */}
+        <div className="flex w-full">
+          <FAQList />
         </div>
-      </Fragment>
+      </div>
     </>
   );
 }

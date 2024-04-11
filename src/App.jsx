@@ -26,7 +26,8 @@ import AdminDashboard from "./pages/Dashboard/Dashboard";
 import Notification from "./pages/Notification/Notification";
 import ActivityMonitoring from "./pages/ActivityMonitoring/ActivityMonitoring";
 import MemberView from "./pages/MembershipManagement/MemberView";
-import Inquiries from "./pages/Inquiries/FAQ Lists Display/FAQDisplayList.jsx";
+// import LabTabs from "./pages/Inquiries/OptionButton.jsx";
+import MainFAQPage from "./pages/Inquiries/MainFAQPage.jsx";
 import FAQAdd from "./pages/Inquiries/FAQ Lists Display/FAQ Functional List/FAQAdd.jsx";
 import FAQDelete from "./pages/Inquiries/FAQ Lists Display/FAQ Functional List/FAQDelete.jsx";
 import FAQEdit from "./pages/Inquiries/FAQ Lists Display/FAQ Functional List/FAQEdit.jsx";
@@ -58,7 +59,7 @@ function App() {
             element={<ActivityMonitoring />}
           />
 
-          <Route path="/inquiries" element={<Inquiries />} />
+          <Route path="/inquiries" element={<MainFAQPage />} />
           <Route path="/inquiries/edit" element={<FAQEdit />} />
           <Route path="/inquiries/add" element={<FAQAdd />} />
           <Route path="/inquiries/delete" element={<FAQDelete />} />

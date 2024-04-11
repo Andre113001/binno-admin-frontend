@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import useHttp from "../../../../hooks/http-hook";
 import * as React from "react";
-import SuccessAlert from "../../../../components/Alerts/SuccessAlert";
+// import SuccessAlert from "../../../../components/Alerts/SuccessAlert";
 
 function FAQAdd() {
   const { sendRequest, isLoading } = useHttp();
