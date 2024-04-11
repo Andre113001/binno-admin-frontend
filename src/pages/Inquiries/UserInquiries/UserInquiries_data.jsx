@@ -1,4 +1,4 @@
-const UserInquiries = [
+const UserInquiriesData = [
   {
     id: "1",
     title: "How to start a company?",
@@ -56,3 +56,5 @@ const UserInquiries = [
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas laoreet, eros eget dapibus bibendum, lectus metus eleifend arcu, vel porta erat dolor iaculis est. Donec eu euismod massa. Pellentesque vulputate turpis augue, malesuada aliquet purus tempor nec.",
   },
 ];
+
+export default UserInquiriesData;

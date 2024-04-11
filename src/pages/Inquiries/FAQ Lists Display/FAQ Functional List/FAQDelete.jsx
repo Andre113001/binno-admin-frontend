@@ -125,12 +125,12 @@ function FAQDelete() {
             {Inquiries.map((item) => (
               // card design
               <div
-                className="flex w-[80%] flex-row items-center my-7 rounded bg-darkWhite "
+                className="flex w-[80%] flex-row items-start my-7 rounded bg-darkWhite "
                 key={item.id}
               >
                 {/* content layout */}
                 <div className="flex flex-col grow">
-                  <h1 className="font-bold">{item.title}</h1>
+                  <h1 className="font-bold mb-2">{item.title}</h1>
                   <p>{item.inquiry}</p>
                 </div>
                 <Stack
@@ -149,7 +149,6 @@ function FAQDelete() {
                     style={{
                       backgroundColor: "#EB5858",
                       color: "#fff",
-                      margin: "24px",
                       borderRadius: "15px",
                     }}
                   >
