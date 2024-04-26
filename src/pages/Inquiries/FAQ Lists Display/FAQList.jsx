@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import FAQEdit from "./FAQ Functional List/FAQEdit";
 import FAQAdd from "./FAQ Functional List/FAQAdd";
 import FAQDelete from "./FAQ Functional List/FAQDelete";
-import Inquiries from "./FAQ_data";
 import { Stack } from "@mui/system";
 import EditNoteRoundedIcon from "@mui/icons-material/EditNoteRounded";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
@@ -10,12 +9,40 @@ import AddBoxRoundedIcon from "@mui/icons-material/AddBoxRounded";
 import { IconButton, Link } from "@mui/material";
 import SearchBar from "../../../components/Search Bar/Searchbar";
 import OptionButton from "../OptionButton";
+import { useHttp } from '../../../hooks/http-hook';
+
 
 function FAQList() {
   const [isEditActive, setIsEditActive] = useState(false);
   const [isDeleteActive, setIsDeleteActive] = useState(false);
   const [isAddActive, setIsAddActive] = useState(false);
   const [isNavigationVisible, setIsNavigationVisible] = useState(true);
+  const [inquiries, setInquiries] = useState([]);
+  const { sendRequest } = useHttp(); 
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await sendRequest({
+          url: `${import.meta.env.VITE_BACKEND_DOMAIN}/faq/fetch`
+        });
+
+        if (!response) {
+          throw new Error('Failed to fetch data');
+        }
+
+        const data = await response;
+        console.log("data: ", data);
+        setInquiries(data);
+        const initialRows = data.map(() => ({ readOnly: true, showButtons: false }));
+        setRowsState(initialRows);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const handleDeleteClick = () => {
     setIsDeleteActive(true);
@@ -105,14 +132,14 @@ function FAQList() {
             // conditionally render content when navigation is clicked
             <div className="flex flex-col items-center">
               {/* list cards */}
-              {Inquiries.map((item) => (
+              {inquiries.map((item, index) => (
                 // card design
                 <div
                   className="flex w-[95%] flex-col my-7 rounded bg-darkWhite"
-                  key={item.id}
+                  key={item.faq_id}
                 >
-                  <h1 className="font-bold">{item.title}</h1>
-                  <p>{item.inquiry}</p>
+                  <h1 className="font-bold">{item.faq_title}</h1>
+                  <p>{item.faq_content}</p>
                 </div>
               ))}
             </div>
