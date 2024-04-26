@@ -1,23 +1,107 @@
-import React, { useState } from 'react';
-import Inquiries from "../FAQ_data";
+import React, { useState, useEffect, useRef } from 'react';
 import { IconButton } from "@mui/material";
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import { Fragment } from "react";
 import SearchBar from "../../../../components/Search Bar/Searchbar";
 import Sidebar from "../../../../components/Sidebar/Sidebar";
 import { Link } from "react-router-dom";
+import { useHttp } from '../../../../hooks/http-hook';
 
-function FAQEdit() {
-  // State to manage the edit mode and button visibility for each row
-  const [rowsState, setRowsState] = useState(Inquiries.map(() => ({ readOnly: true, showButtons: false })));
+const FAQEdit = () => {
+  const [inquiries, setInquiries] = useState([]);
+  const [rowsState, setRowsState] = useState([]);
+  const { sendRequest, isLoading, error, clearError } = useHttp(); 
 
-  // Function to toggle the edit mode and button visibility for a specific row
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await sendRequest({
+          url: `${import.meta.env.VITE_BACKEND_DOMAIN}/faq/fetch`
+        });
+
+        if (!response) {
+          throw new Error('Failed to fetch data');
+        }
+
+        const data = await response;
+        console.log("data: ", data);
+        setInquiries(data);
+        const initialRows = data.map(() => ({ readOnly: true, showButtons: false }));
+        setRowsState(initialRows);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   const handleEditClick = (index) => {
+    if (index < 0 || index >= rowsState.length) return; 
     setRowsState(prevState => {
       const newState = [...prevState];
       newState[index] = {
-        readOnly: false,
-        showButtons: true
+        readOnly: !prevState[index].readOnly, 
+        showButtons: !prevState[index].showButtons,
+      };
+      return newState;
+    });
+  };
+
+  const updateFaq = async (faq_id, newTitle, newContent) => {
+    try {
+      const response = await sendRequest({
+        url: `${import.meta.env.VITE_BACKEND_DOMAIN}/faq/edit`,
+        method: 'POST',
+        body: JSON.stringify({
+          faq_id: faq_id,
+          faq_title: newTitle,
+          faq_content: newContent
+        }),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+  
+      if (!response || !response.data) {
+        throw new Error('Invalid response from server');
+      }
+  
+      console.log('Update FAQ response:', response.data);
+  
+    } catch (error) {
+      console.error('Error updating FAQ:', error.message);
+      throw new Error('Failed to update FAQ: ' + error.message); 
+    } finally {
+      clearError();
+    }
+  };
+  
+
+  const handleFaqUpdate = async (index, faq_id) => {
+    if (index < 0 || index >= inquiries.length) return; 
+
+    const newTitle = inquiries[index].faq_title;
+    const newContent = inquiries[index].faq_content;
+
+    await updateFaq(faq_id, newTitle, newContent);
+  
+    // Update inquiries state (assuming successful response)
+    setInquiries(prevState => {
+      const updatedInquiries = [...prevState];
+      updatedInquiries[index] = {
+        ...prevState[index],
+        faq_title: newTitle,
+        faq_content: newContent,
+      };
+      return updatedInquiries;
+    });
+
+    setRowsState(prevState => {
+      const newState = [...prevState];
+      newState[index] = {
+        readOnly: true,
+        showButtons: false
       };
       return newState;
     });
@@ -42,26 +126,40 @@ function FAQEdit() {
             <SearchBar />
           </div>
           <div className="flex flex-col w-full items-center w-full">
-            {Inquiries.map((item, index) => (
-              <div
-                className="flex w-full flex-col items-center my-7 rounded bg-darkWhite "
-                key={item.id}
-              >
+            {inquiries.map((item, index) => (
+              <div key={item.faq_id} className="flex w-full flex-col items-center my-7 rounded bg-darkWhite ">
                 <div className="flex flex-row w-[80%] grow">
                   <div className="flex flex-col">
-                    <h1 className="font-bold text-lg mr-5">Title: </h1>
-                    <h1 className=" font-bold text-lg mr-5">Content: </h1>
+                    <h1 className="font-bold text-lg mr-5 mb-1">Title: </h1>
+                    <h1 className="font-bold text-lg mr-5">Content: </h1>
                   </div>
                   <div className="flex flex-col w-full">
-                    <h1 className="font-bold">{item.title}</h1>
-                    <textarea
-                      readOnly={rowsState[index].readOnly}
-                      rows="6"
-                      style={{
-                        resize: 'none', // Disable textarea resizing
-                        overflow: 'hidden', // Hide scrollbar
-                      }}
-                      className="mr-2 mt-2 w-full">{item.inquiry}</textarea>
+                  <textarea
+  readOnly={rowsState[index].readOnly}
+  rows="1"
+  style={{ resize: 'none', overflow: 'hidden' }}
+  className="mr-2 w-full p-1"
+  value={inquiries[index].faq_title}
+  onChange={(event) => {
+    const updatedInquiries = [...inquiries];
+    updatedInquiries[index].faq_title = event.target.value;
+    setInquiries(updatedInquiries);
+  }}
+/>
+
+<textarea
+  readOnly={rowsState[index].readOnly}
+  rows="6"
+  style={{ resize: 'none', overflow: 'hidden' }}
+  className="mr-2 w-full p-1"
+  value={inquiries[index].faq_content} 
+  onChange={(event) => {
+    const updatedInquiries = [...inquiries];
+    updatedInquiries[index].faq_content = event.target.value;
+    setInquiries(updatedInquiries);
+  }}
+/>
+
                   </div>
                   <IconButton
                     onClick={() => handleEditClick(index)}
@@ -74,7 +172,7 @@ function FAQEdit() {
                       borderRadius: "15px",
                       width: "45px",
                       height: "45px ",
-                      alignSelf: "center"
+                      alignSelf: "center",
                     }}
                   >
                     <EditRoundedIcon />
@@ -84,11 +182,16 @@ function FAQEdit() {
                   <div className="flex flex-row w-[80%] my-5">
                     <button
                       className="p-2 mx-2 w-[50%] border border-secondary font-bold text-secondary rounded-full"
+                      onClick={() => handleEditClick(index)}
                     >
                       Cancel
                     </button>
-                    <button className="p-2 mx-2 w-[50%] border font-bold rounded-full text-white bg-secondary">
-                      Add FAQ
+                    <button
+                      className="p-2 mx-2 w-[50%] border font-bold rounded-full text-white bg-secondary"
+                      onClick={() => handleFaqUpdate(index, item.faq_id)}
+                      disabled={isLoading} 
+                    >
+                      {isLoading ? 'Updating...' : 'Update FAQ'}
                     </button>
                   </div>
                 )}

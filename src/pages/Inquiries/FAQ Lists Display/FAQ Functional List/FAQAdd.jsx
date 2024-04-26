@@ -13,7 +13,6 @@ function FAQAdd() {
   const { sendRequest, isLoading } = useHttp();
   const faq_title = useRef();
   const faq_content = useRef();
-
   const navigate = useNavigate();
 
   function cancelBtn() {
@@ -29,18 +28,23 @@ function FAQAdd() {
       content: faqContent,
     };
 
-    const res = await sendRequest({
-      url: `${import.meta.env.VITE_BACKEND_DOMAIN}/faq/upload`,
-      method: "POST",
-      body: JSON.stringify(data),
-      headers: { "Content-Type": "multipart/form-data" },
-    });
-    // <SuccessAlert />;
-    console.log(res);
+    try {
+      const res = await sendRequest({
+        url: `${import.meta.env.VITE_BACKEND_DOMAIN}/faq/upload`,
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: { "Content-Type": "application/json" },
+      });
+      
 
-    // if (res === "Upload is complete") {
-    //   console.log("oks na mga ganon depota sineryoso talaga okay na");
-    // }
+      console.log(res);
+
+    
+      // navigate("/inquiries");
+    } catch (error) {
+  
+      console.error("Error occurred:", error.message);
+    }
   };
 
   return (
@@ -109,7 +113,7 @@ function FAQAdd() {
             </div>
             {/* list cards */}
             {Inquiries.map((item) => (
-              // card design
+         
               <div
                 className="flex w-[80%] flex-col my-7 rounded bg-darkWhite"
                 key={item.id}

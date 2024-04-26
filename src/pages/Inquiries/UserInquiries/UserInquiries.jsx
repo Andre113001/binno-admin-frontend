@@ -43,7 +43,10 @@ function UserInquiries() {
                       borderRadius: "15px",
                     }}
                   >
+
+<a href={`mailto:${item.email}`}>
                     <EmailRoundedIcon fontSize="medium" />
+                    </a>
                   </IconButton>
                 </div>
               </div>
