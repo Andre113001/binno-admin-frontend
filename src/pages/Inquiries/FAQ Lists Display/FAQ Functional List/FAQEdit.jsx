@@ -6,6 +6,7 @@ import SearchBar from "../../../../components/Search Bar/Searchbar";
 import Sidebar from "../../../../components/Sidebar/Sidebar";
 import { Link } from "react-router-dom";
 import { useHttp } from '../../../../hooks/http-hook';
+import { Snackbar } from "@mui/material";
 
 const FAQEdit = () => {
   const [inquiries, setInquiries] = useState([]);
@@ -58,7 +59,6 @@ const FAQEdit = () => {
         title: newTitle,
         content: newContent,
       }),
-
     });
 
 

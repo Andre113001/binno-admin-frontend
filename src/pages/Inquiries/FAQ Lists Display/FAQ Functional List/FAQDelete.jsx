@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Inquiries from "../FAQ_data";
 import { IconButton } from "@mui/material";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
@@ -9,34 +9,64 @@ import { Link } from "react-router-dom";
 import useCustomModal from "../../../../hooks/useCustomModal";
 import { Button } from "@mui/material";
 import Stack from "@mui/material/Stack";
+import { useHttp } from '../../../../hooks/http-hook';
 
 function FAQDelete() {
   const [selectedId, setSelectedID] = useState();
-  const [faqId, setFaqId] = useState();
+  const [inquiries, setInquiries] = useState([]);
+  const { sendRequest } = useHttp(); 
+
   const {
     handleClose: handleCloseModal,
     handleOpen: handleOpenModal,
     CustomModal,
   } = useCustomModal();
+  
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await sendRequest({
+          url: `${import.meta.env.VITE_BACKEND_DOMAIN}/faq/fetch`
+        });
+
+        if (!response) {
+          throw new Error('Failed to fetch data');
+        }
+
+        const data = await response;
+        console.log("data: ", data);
+        setInquiries(data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+  
 
   const handleDeleteFAQ = async () => {
     const res = await sendRequest({
       url: `${import.meta.env.VITE_BACKEND_DOMAIN}/faq/delete`,
       method: "POST",
-      headers: {
-        "Content-Type": "application/json", // Specify that you are sending JSON data
-      },
+      // headers: {
+      //   "Content-Type": "application/json", // Specify that you are sending JSON data
+      // },
       body: JSON.stringify({
         faqId: selectedId,
       }),
     });
 
-    if (res.message === "FAQ deleted successfully") {
+    console.log(selectedId);
+
+    if (res.message === "Faq is deleted.") {
       handleCloseModal();
-      showSnackbar("Blog Deleted Successfully", "success");
+      // showSnackbar("Blog Deleted Successfully", "success");
       window.location.reload();
     } else {
-      showSnackbar("Delete Unsuccessful", "error");
+      console.error('Error deleting FAQ:', "error" );
     }
   };
 
@@ -122,16 +152,16 @@ function FAQDelete() {
             <SearchBar />
           </div>
           <div className="flex flex-col items-center">
-            {Inquiries.map((item) => (
+            {inquiries.map((item, index) => (
               // card design
               <div
                 className="flex w-[80%] flex-row items-start my-7 rounded bg-darkWhite "
-                key={item.id}
+                key={item.faq_id}
               >
                 {/* content layout */}
                 <div className="flex flex-col grow">
-                  <h1 className="font-bold mb-2">{item.title}</h1>
-                  <p>{item.inquiry}</p>
+                  <h1 className="font-bold mb-2">{item.faq_title}</h1>
+                  <p>{item.faq_content}</p>
                 </div>
                 <Stack
                   direction="row"
@@ -139,7 +169,7 @@ function FAQDelete() {
                   margin={"0 20px"}
                   onClick={(e) => {
                     e.stopPropagation();
-                    setSelectedID(item.id);
+                    setSelectedID(item.faq_id);
                     handleOpenModal();
                   }}
                 >
