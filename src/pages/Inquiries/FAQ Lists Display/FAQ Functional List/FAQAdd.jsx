@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import Inquiries from "../FAQ_data";
 import SearchBar from "../../../../components/Search Bar/Searchbar";
 import { Fragment } from "react";
@@ -11,6 +11,8 @@ import * as React from "react";
 
 function FAQAdd() {
   const { sendRequest, isLoading } = useHttp();
+  const [inquiries, setInquiries] = useState([]);
+
   const faq_title = useRef();
   const faq_content = useRef();
   const navigate = useNavigate();
@@ -18,6 +20,32 @@ function FAQAdd() {
   function cancelBtn() {
     navigate(-1);
   }
+
+
+  useEffect (() => {
+    const fetchData = async () => {
+
+    try{
+       const response = await sendRequest({
+      url: `${import.meta.env.VITE_BACKEND_DOMAIN}/faq/fetch`,
+    });
+
+    if (!response) {
+      throw new Error('Failed to fetch data');
+    }
+
+    const data = await response;
+    console.log("data: ", data);
+    setInquiries(data);
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  }
+    
+ 
+  };
+  
+fetchData();
+},[] );
 
   const handleSubmit = async () => {
     const faqContent = faq_content.current.value;
@@ -112,14 +140,14 @@ function FAQAdd() {
               </div>
             </div>
             {/* list cards */}
-            {Inquiries.map((item) => (
+            {inquiries.map((item, index) => (
          
               <div
                 className="flex w-[80%] flex-col my-7 rounded bg-darkWhite"
-                key={item.id}
+                key={item.faq_id}
               >
-                <h1 className="font-bold">{item.title}</h1>
-                <p>{item.inquiry}</p>
+                <h1 className="font-bold">{item.faq_title}</h1>
+                <p>{item.faq_content}</p>
               </div>
             ))}
           </div>

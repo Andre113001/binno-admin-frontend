@@ -34,8 +34,7 @@ function FAQList() {
         const data = await response;
         console.log("data: ", data);
         setInquiries(data);
-        const initialRows = data.map(() => ({ readOnly: true, showButtons: false }));
-        setRowsState(initialRows);
+      
       } catch (error) {
         console.error('Error fetching data:', error);
       }
