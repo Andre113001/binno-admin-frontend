@@ -48,64 +48,73 @@ const FAQEdit = () => {
     });
   };
 
-  const updateFaq = async (faq_id, newTitle, newContent) => {
-    try {
-      const response = await sendRequest({
-        url: `${import.meta.env.VITE_BACKEND_DOMAIN}/faq/edit`,
-        method: 'POST',
-        body: JSON.stringify({
-          faq_id: faq_id,
-          faq_title: newTitle,
-          faq_content: newContent
-        }),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-  
-      if (!response || !response.data) {
-        throw new Error('Invalid response from server');
-      }
-  
-      console.log('Update FAQ response:', response.data);
-  
-    } catch (error) {
-      console.error('Error updating FAQ:', error.message);
-      throw new Error('Failed to update FAQ: ' + error.message); 
-    } finally {
-      clearError();
-    }
-  };
-  
+ const updateFaq = async (faqId, newTitle, newContent) => {
+  try {
+    const response = await sendRequest({
+      url: `${import.meta.env.VITE_BACKEND_DOMAIN}/faq/edit`,
+      method: 'POST',
+      body: JSON.stringify({
+        faqId: faqId,
+        title: newTitle,
+        content: newContent,
+      }),
 
-  const handleFaqUpdate = async (index, faq_id) => {
-    if (index < 0 || index >= inquiries.length) return; 
-
-    const newTitle = inquiries[index].faq_title;
-    const newContent = inquiries[index].faq_content;
-
-    await updateFaq(faq_id, newTitle, newContent);
-  
-    // Update inquiries state (assuming successful response)
-    setInquiries(prevState => {
-      const updatedInquiries = [...prevState];
-      updatedInquiries[index] = {
-        ...prevState[index],
-        faq_title: newTitle,
-        faq_content: newContent,
-      };
-      return updatedInquiries;
     });
 
-    setRowsState(prevState => {
-      const newState = [...prevState];
-      newState[index] = {
-        readOnly: true,
-        showButtons: false
-      };
-      return newState;
-    });
-  };
+
+    console.log('Updated FAQ:', faqId, newTitle, newContent);
+
+    console.log('Update FAQ response:', response);
+
+  } catch (error) {
+        console.log('Updated FAQ:', faqId, newTitle, newContent);
+    console.error('Error updating FAQ:', error.message);
+    throw new Error('Failed to update FAQ: ' + error.message); 
+  } finally {
+    clearError();
+  }
+};
+
+  
+
+const handleFaqUpdate = async (index, faqId) => {
+  if (index < 0 || index >= inquiries.length) return; 
+
+  const newTitle = inquiries[index].faq_title;
+  const newContent = inquiries[index].faq_content;
+
+  // Log faq_id, newTitle, and newContent
+  console.log('Updating FAQ:', faqId, newTitle, newContent);
+
+  // Check if newTitle and newContent are null
+  if (!newTitle || !newContent) {
+    console.error('New title or new content is null.');
+    return;
+  }
+
+  await updateFaq(faqId, newTitle, newContent);
+
+  // Update inquiries state (assuming successful response)
+  setInquiries(prevState => {
+    const updatedInquiries = [...prevState];
+    updatedInquiries[index] = {
+      ...prevState[index],
+      faq_title: newTitle,
+      faq_content: newContent,
+    };
+    return updatedInquiries;
+  });
+
+  setRowsState(prevState => {
+    const newState = [...prevState];
+    newState[index] = {
+      readOnly: true,
+      showButtons: false
+    };
+    return newState;
+  });
+};
+
 
   return (
     <>
@@ -139,7 +148,7 @@ const FAQEdit = () => {
   rows="1"
   style={{ resize: 'none', overflow: 'hidden' }}
   className="mr-2 w-full p-1"
-  value={inquiries[index].faq_title}
+  value={inquiries[index].faq_title || ""} // Ensure it's not null
   onChange={(event) => {
     const updatedInquiries = [...inquiries];
     updatedInquiries[index].faq_title = event.target.value;
@@ -152,13 +161,14 @@ const FAQEdit = () => {
   rows="6"
   style={{ resize: 'none', overflow: 'hidden' }}
   className="mr-2 w-full p-1"
-  value={inquiries[index].faq_content} 
+  value={inquiries[index].faq_content || ""} // Ensure it's not null
   onChange={(event) => {
     const updatedInquiries = [...inquiries];
     updatedInquiries[index].faq_content = event.target.value;
     setInquiries(updatedInquiries);
   }}
 />
+
 
                   </div>
                   <IconButton
