@@ -67,34 +67,35 @@ const filterQuestions = (searchText) => {
 };
 
 
+const handleSubmit = async () => {
+  const faqContent = faq_content.current.value;
+  const faqTitle = faq_title.current.value;
 
-  const handleSubmit = async () => {
-    const faqContent = faq_content.current.value;
-    const faqTitle = faq_title.current.value;
-
-    const data = {
-      title: faqTitle,
-      content: faqContent,
-    };
-
-    try {
-      const res = await sendRequest({
-        url: `${import.meta.env.VITE_BACKEND_DOMAIN}/faq/upload`,
-        method: "POST",
-        body: JSON.stringify(data),
-        headers: { "Content-Type": "application/json" },
-      });
-      
-
-      console.log(res);
-
-    
-      // navigate("/inquiries");
-    } catch (error) {
-  
-      console.error("Error occurred:", error.message);
-    }
+  const data = {
+    title: faqTitle,
+    content: faqContent,
   };
+
+  try {
+    const res = await sendRequest({
+      url: `${import.meta.env.VITE_BACKEND_DOMAIN}/faq/upload`,
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: { "Content-Type": "application/json" },
+    });
+
+    if (res.message === "Upload is complete") {
+      // showSnackbar("Blog Deleted Successfully", "success");
+      window.location.reload();
+    } else {
+      console.error('Error deleting FAQ:', "error" );
+    }
+  } catch (error) {
+    console.error("Error occurred:", error.message);
+    // You can handle the error here as well
+  }
+};
+
 
   return (
     <>
