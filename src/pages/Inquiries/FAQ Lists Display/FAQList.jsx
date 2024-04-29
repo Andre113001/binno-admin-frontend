@@ -170,7 +170,7 @@ function FAQList() {
             // conditionally render content when navigation is clicked
             <div className="flex flex-col items-center">
               {/* list cards */}
-              {filteredQuestions.map((item, index) => {
+              {filteredQuestions.map((item) => {
   const { faq_id: id, faq_title: title, faq_content: content } = item;
   return (
     // card design

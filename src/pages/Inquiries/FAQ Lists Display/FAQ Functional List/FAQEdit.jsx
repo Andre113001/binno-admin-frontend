@@ -14,6 +14,7 @@ const FAQEdit = () => {
   const [rowsState, setRowsState] = useState([]);
   const [showSidebar, setShowSidebar] = useState(true); // Initially hidden
   const [isTabletOrSmaller, setIsTabletOrSmaller] = useState(false);
+  const [filteredQuestions, setFilteredQuestions] = useState([]);
   const { sendRequest, isLoading, error, clearError } = useHttp(); 
 
   useEffect(() => {
@@ -63,6 +64,24 @@ const FAQEdit = () => {
       };
       return newState;
     });
+  };
+
+
+  useEffect(() => {
+    // Set filteredQuestions to inquiries initially
+    setFilteredQuestions(inquiries);
+  }, [inquiries]);
+  
+  const filterQuestions = (searchText) => {
+    if (searchText.trim() === "") {
+      // If searchText is empty, display all inquiries
+      setFilteredQuestions(inquiries);
+    } else {
+      const filtered = inquiries.filter(item =>
+        item.faq_title && item.faq_title.toLowerCase().includes(searchText.toLowerCase())
+      );
+      setFilteredQuestions(filtered);
+    }
   };
 
   const updateFaq = async (faqId, newTitle, newContent) => {
@@ -140,79 +159,102 @@ const FAQEdit = () => {
               </div>
               <div className="flex flex-col items-center text-5xl font-bold text-primary justify-center w-full">
                 Frequently Asked Question
-                <SearchBar />
+                <div className="w-full mt-4">
+                <form>          
+              <div className='max-w-xl mx-auto sm:w-2/4'>
+          <div className="relative flex items-center w-full h-12 rounded-lg focus-within:shadow-lg border border-slate-500 overflow-hidden h-9">
+            <div className="grid place-items-center h-full w-12 text-gray-300 bg-white">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+            </div>
+            <input
+              className="peer h-full w-full outline-none text-sm text-black pr-2 bg-white"
+              type="text"
+              id="search"
+              placeholder="Search something.."
+              onChange={(e) => filterQuestions(e.target.value)}
+            />
+          </div>
+        </div>
+      </form>
+      </div>
               </div>
               <div className="flex flex-col w-full items-center w-full">
-                {inquiries.map((item, index) => (
-                  <div key={item.faq_id} className="flex w-full flex-col items-center my-7 rounded bg-darkWhite ">
-                    <div className="flex flex-row w-[80%] grow">
-                      <div className="flex flex-col">
-                        <h1 className="font-bold text-lg mr-5 mb-1">Title: </h1>
-                        <h1 className="font-bold text-lg mr-5">Content: </h1>
-                      </div>
-                      <div className="flex flex-col w-full">
-                        <textarea
-                          readOnly={rowsState[index].readOnly}
-                          rows="1"
-                          style={{ resize: 'none', overflow: 'hidden' }}
-                          className="mr-2 w-full p-1"
-                          value={inquiries[index].faq_title || ""} // Ensure it's not null
-                          onChange={(event) => {
-                            const updatedInquiries = [...inquiries];
-                            updatedInquiries[index].faq_title = event.target.value;
-                            setInquiries(updatedInquiries);
-                          }}
-                        />
+              {filteredQuestions.map((item, index) => {
+  const { faq_id: id, faq_title: title, faq_content: content } = item;
+  return (
+    <div key={id} className="flex w-full flex-col items-center my-7 rounded bg-darkWhite">
+      <div className="flex flex-row w-[80%] grow">
+        <div className="flex flex-col">
+          <h1 className="font-bold text-lg mr-5 mb-1">Title: </h1>
+          <h1 className="font-bold text-lg mr-5">Content: </h1>
+        </div>
+        <div className="flex flex-col w-full">
+          <textarea
+            readOnly={rowsState[index].readOnly}
+            rows="1"
+            style={{ resize: 'none', overflow: 'hidden' }}
+            className="mr-2 w-full p-1"
+            value={title || ""} // Use 'title' directly instead of 'inquiries[index].title'
+            onChange={(event) => {
+              const updatedFilteredQuestions = [...filteredQuestions]; // Copy the array
+              updatedFilteredQuestions[index].faq_title = event.target.value; // Update the specific item
+              setFilteredQuestions(updatedFilteredQuestions); // Update the state
+            }}
+          />
 
-                        <textarea
-                          readOnly={rowsState[index].readOnly}
-                          rows="6"
-                          style={{ resize: 'none', overflow: 'hidden' }}
-                          className="mr-2 w-full p-1"
-                          value={inquiries[index].faq_content || ""} // Ensure it's not null
-                          onChange={(event) => {
-                            const updatedInquiries = [...inquiries];
-                            updatedInquiries[index].faq_content = event.target.value;
-                            setInquiries(updatedInquiries);
-                          }}
-                        />
-                      </div>
-                      <IconButton
-                        onClick={() => handleEditClick(index)}
-                        aria-label="Edit"
-                        size="large"
-                        style={{
-                          backgroundColor: "#5c9fef",
-                          color: "#fff",
-                          margin: "24px",
-                          borderRadius: "15px",
-                          width: "45px",
-                          height: "45px ",
-                          alignSelf: "center",
-                        }}
-                      >
-                        <EditRoundedIcon />
-                      </IconButton>
-                    </div>
-                    {rowsState[index].showButtons && (
-                      <div className="flex flex-row w-[80%] my-5">
-                        <button
-                          className="p-2 mx-2 w-[50%] border border-secondary font-bold text-secondary rounded-full"
-                          onClick={() => handleEditClick(index)}
-                        >
-                          Cancel
-                        </button>
-                        <button
-                          className="p-2 mx-2 w-[50%] border font-bold rounded-full text-white bg-secondary"
-                          onClick={() => handleFaqUpdate(index, item.faq_id)}
-                          disabled={isLoading} 
-                        >
-                          {isLoading ? 'Updating...' : 'Update FAQ'}
-                        </button>
-                      </div>
-                    )}
-                  </div>
-                ))}
+          <textarea
+            readOnly={rowsState[index].readOnly}
+            rows="6"
+            style={{ resize: 'none', overflow: 'hidden' }}
+            className="mr-2 w-full p-1"
+            value={content || ""} // Use 'content' directly instead of 'inquiries[index].content'
+            onChange={(event) => {
+              const updatedFilteredQuestions = [...filteredQuestions]; // Copy the array
+              updatedFilteredQuestions[index].faq_content = event.target.value; // Update the specific item
+              setFilteredQuestions(updatedFilteredQuestions); // Update the state
+            }}
+          />
+        </div>
+        <IconButton
+          onClick={() => handleEditClick(index)}
+          aria-label="Edit"
+          size="large"
+          style={{
+            backgroundColor: "#5c9fef",
+            color: "#fff",
+            margin: "24px",
+            borderRadius: "15px",
+            width: "45px",
+            height: "45px ",
+            alignSelf: "center",
+          }}
+        >
+          <EditRoundedIcon />
+        </IconButton>
+      </div>
+      {rowsState[index].showButtons && (
+        <div className="flex flex-row w-[80%] my-5">
+          <button
+            className="p-2 mx-2 w-[50%] border border-secondary font-bold text-secondary rounded-full"
+            onClick={() => handleEditClick(index)}
+          >
+            Cancel
+          </button>
+          <button
+            className="p-2 mx-2 w-[50%] border font-bold rounded-full text-white bg-secondary"
+            onClick={() => handleFaqUpdate(index, id)}
+            disabled={isLoading}
+          >
+            {isLoading ? 'Updating...' : 'Update FAQ'}
+          </button>
+        </div>
+      )}
+    </div>
+  );
+})}
+
               </div>
             </div>
           </div>
